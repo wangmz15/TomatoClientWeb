@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.idea/
+client/.gitignore
+client/README.md
+client/package-lock.json
+client/package.json
+client/public/
+client/src/
