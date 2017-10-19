@@ -7,7 +7,7 @@ import Login from '../Components/Login'
 class LoginContainer extends Component {
   render() {
     const { getCustomer, logoutCustomer, isActive } = this.props
-    console.log(getCustomer);
+    // console.log(getCustomer);
     return (
       <Login history = {this.props.history} loginCustomer={getCustomer} logoutCustomer={logoutCustomer} isActive={isActive} />
     )

@@ -6,11 +6,15 @@ import React, { Component} from 'react'
 import HomePage from '../Components/HomePage'
 
 class HomePageContainer extends Component {
+
+
+
+
     render() {
         // const { getCustomer, logoutCustomer, isActive } = this.props
         // console.log(getCustomer);
         return (
-            <HomePage/>
+            <HomePage history = {this.props.history}/>
         )
     }
 }

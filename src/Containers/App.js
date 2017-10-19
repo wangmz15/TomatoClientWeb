@@ -1,7 +1,6 @@
 import React from 'react';
 
 import LoginContainer from './LoginContainer.js'
-// eslint-disable-next-line
 import HomePageContainer from './HomePageContainer.js'
 
 import {cyan500} from 'material-ui/styles/colors';

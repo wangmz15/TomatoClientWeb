@@ -16,7 +16,7 @@ import TextField from 'material-ui/TextField';
 
 const styles = {
   title: {
-   cursor: 'pointer',
+   //cursor: 'pointer',
 
   },
   titleStyle: {
