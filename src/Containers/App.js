@@ -1,7 +1,7 @@
 import React from 'react';
 
-import LoginContainer from './LoginContainer.js'
-import HomePageContainer from './HomePageContainer.js'
+import LoginContainer from './LoginContainer'
+
 
 import {cyan500} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -9,7 +9,12 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 // import { Provider } from 'react-redux'
 // import { Route,} from 'react-router'
-import {HashRouter as Router, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+
+import Help from './Help'
+import Statistics from "./Statistics";
+import Wealth from './Wealth'
+import TeamMessage from './TeamMessage'
 
 
 
@@ -22,15 +27,6 @@ const muiTheme = getMuiTheme({
     },
 });
 
-
-// class App extends React.Component {
-//  render() {
-//    return (
-//      {/*<div className="Login"></div>*/}
-//    );
-//  }
-// }
-
 const supportsHistory = 'pushState' in window.history;
 
 const App = () => (
@@ -40,8 +36,11 @@ const App = () => (
             forceRefresh={supportsHistory}>
 
             <div>
-            <Route exact path="/" component={LoginContainer} ></Route>
-            <Route exact path="/HomePage/:userNamee" component={HomePageContainer} ></Route>
+            <Route exact path="/" component={LoginContainer} />
+                <Route exact path = "/:userNamee/TeamMessage" component = {TeamMessage}/>
+                <Route exact path = "/:userNamee/Statistics" component = {Statistics}/>
+                <Route exact path = "/:userNamee/Wealth" component = {Wealth}/>
+                <Route exact path = "/:userNamee/Help" component = {Help}/>
             </div>
         </Router>
     </MuiThemeProvider>

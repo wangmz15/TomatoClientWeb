@@ -8,7 +8,7 @@ import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 // import {isActive} from "../Reducers/index";
 
@@ -77,23 +77,11 @@ class Login extends React.Component{
 
     handleUsername = (event) => {
         this.setState({ username: event.target.value })
-//        console.log(this.state.username)
-      }
+    }
 
     handlePassword = (event) => {
         this.setState({ password: event.target.value })
-//        console.log(this.state.password)
     }
-
-//    handleUsername(event){
-//        this.setState({ username: event.target.value })
-//        console.log(this.state.username)
-//    }
-
-//    handlePassword(event){
-//        this.setState({ password: event.target.value })
-//        console.log(this.state.password)
-//    }
 
     handleLogin = () => {
         console.log(this.props);
@@ -130,7 +118,7 @@ class Login extends React.Component{
         if (true) {
             console.log(this.props)
             // this.props.replaceState(null, '/HomePage');
-            this.props.history.push('/HomePage/'+this.state.username)
+            this.props.history.push('/'+this.state.username+'/TeamMessage')
         } else {
             // 这里使用 replaceState 方法做了跳转，但在浏览器历史中不会多一条记录，因为是替换了当前的记录
             // this.props.history.replaceState(null, '/about');
@@ -170,7 +158,7 @@ class Login extends React.Component{
                    errorText={this.state.error.password}
                  />
                  <br /><br />
-                 <FlatButton
+                 <RaisedButton
                     label="登录"
                     primary={true}
                     onClick={this.handleLogin}

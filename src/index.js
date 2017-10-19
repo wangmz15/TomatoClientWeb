@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 // import render from 'react-dom'
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
-// import { Router, Route} from 'react-router'
-// import {HashRouter} from  'react-router-dom'
 import thunkMiddleware from 'redux-thunk'
 import promiseMiddleware from 'redux-promise-middleware'
 

@@ -2,25 +2,12 @@ import React, {Component} from 'react';
 import {
     Table,
     TableBody,
-    TableFooter,
+    // TableFooter,
     TableHeader,
     TableHeaderColumn,
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table';
-import TextField from 'material-ui/TextField';
-import Toggle from 'material-ui/Toggle';
-
-const styles = {
-    propContainer: {
-        width: 200,
-        overflow: 'hidden',
-        margin: '20px auto 0',
-    },
-    propToggleHeader: {
-        margin: '20px auto 10px',
-    },
-};
 
 const tableData = [
     {
@@ -57,19 +44,21 @@ const tableData = [
  * A more complex example, allowing the table height to be set, and key boolean properties to be toggled.
  */
 export default class TableExampleComplex extends Component {
-    state = {
-        fixedHeader: true,
-        fixedFooter: false,
-        stripedRows: true,
-        showRowHover: true,
-        selectable: true,
-        multiSelectable: false,
-        enableSelectAll: false,
-        deselectOnClickaway: true,
-        showCheckboxes: false,
-        height: '300px',
-    };
-
+    constructor(props){
+        super(props)
+        this.state ={
+            fixedHeader: true,
+            fixedFooter: false,
+            stripedRows: true,
+            showRowHover: true,
+            selectable: true,
+            multiSelectable: false,
+            enableSelectAll: false,
+            deselectOnClickaway: true,
+            showCheckboxes: false,
+            height: '300px',
+        }
+    }
     handleToggle = (event, toggled) => {
         this.setState({
             [event.target.name]: toggled,
@@ -105,7 +94,7 @@ export default class TableExampleComplex extends Component {
                                     // 'font-color':'cyan500',
                                     'color': 'cyan500',}}
                             >
-                                TOMATO
+                                TEAM:TOMATO
                             </TableHeaderColumn>
                         </TableRow>
                         <TableRow>
