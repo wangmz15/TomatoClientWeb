@@ -1,6 +1,6 @@
-import AppBar from 'material-ui/AppBar';
 import React from 'react'
 import {RaisedButton} from "material-ui";
+import {removeJwtToken} from "../Actions/Storage";
 const styles = {
     title:{
         'text-align': 'center',
@@ -30,6 +30,12 @@ export default class LogoutButton extends React.Component{
     //     this.setState({navigate:!this.state.navigate})
     //     console.log("navigate = "+this.state.username)
     // }
+
+    handleLogout = () => {
+        removeJwtToken();
+        // this.props.history.replace('/');
+        window.location.href = '/';
+    };
     render(){
         return(
             <div>
@@ -37,7 +43,8 @@ export default class LogoutButton extends React.Component{
                     <RaisedButton
                         label="登出"
                         primary={true}
-                        onClick={() => this.props.onClick()}
+                        // onClick={() => this.props.onClick()}
+                        onClick={this.handleLogout}
                     />
                 </div>
             </div>

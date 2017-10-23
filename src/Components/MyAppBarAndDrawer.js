@@ -46,7 +46,7 @@ export default class MyAppBarAndDrawer extends React.Component{
     //     this.props.history.replace('/'+this.state.username+'/Help')
     // }
     render(){
-        console.log(this.state.navigate)
+        // console.log(this.state.navigate)
         return(
             <div>
                 <AppBar
@@ -64,10 +64,10 @@ export default class MyAppBarAndDrawer extends React.Component{
                     {/*<MenuItem onClick={this.handleWealthClick}>资产</MenuItem>*/}
                     {/*<MenuItem onClick={this.handleStatisticsClick}>统计</MenuItem>*/}
                     {/*<MenuItem onClick={this.handleHelpClick}>帮助</MenuItem>*/}
-                    <MenuItem containerElement={<Link to="/+this.state.username+/TeamMessage" />} >队伍信息</MenuItem>
-                    <MenuItem containerElement={<Link to="/+this.state.username+/Wealth" />}>资产</MenuItem>
-                    <MenuItem containerElement={<Link to="/+this.state.username+/Statistics" />}>统计</MenuItem>
-                    <MenuItem containerElement={<Link to="/+this.state.username+/Help" />}>帮助</MenuItem>
+                    <MenuItem containerElement={<Link to="/TeamMessage" />} >队伍信息</MenuItem>
+                    <MenuItem containerElement={<Link to="/Wealth" />}>资产</MenuItem>
+                    <MenuItem containerElement={<Link to="/Statistics" />}>统计</MenuItem>
+                    <MenuItem containerElement={<Link to="/Help" />}>帮助</MenuItem>
                 </Drawer>
             </div>
 

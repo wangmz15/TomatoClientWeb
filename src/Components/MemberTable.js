@@ -58,6 +58,7 @@ export default class TableExampleComplex extends Component {
             showCheckboxes: false,
             height: '300px',
         }
+        // console.log("this.props.username ?" + this.props.username);
     }
     handleToggle = (event, toggled) => {
         this.setState({
@@ -94,7 +95,7 @@ export default class TableExampleComplex extends Component {
                                     // 'font-color':'cyan500',
                                     'color': 'cyan500',}}
                             >
-                                TEAM:TOMATO
+                                {this.props.username}
                             </TableHeaderColumn>
                         </TableRow>
                         <TableRow>

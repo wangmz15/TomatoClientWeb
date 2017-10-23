@@ -10,9 +10,9 @@ export default combineReducers({//作为入口 把所有的reducer 绑在一起
   form: formReducer,
 })
 
-export const isActive = state => {
-    return fromCustomer.isActive(state.customer);
-};
+// export const isActive = state => {
+//     return fromCustomer.isActive(state.customer);
+// };
 //相当于
 //export const isActive(state){
 //    return fromCustomer.isActive(state.customer)

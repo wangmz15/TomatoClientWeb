@@ -12,9 +12,11 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import Help from './Help'
-import Statistics from "./Statistics";
-import Wealth from './Wealth'
-import TeamMessage from './TeamMessage'
+import Statistics from "../Components/Statistics";
+import Wealth from '../Components/Wealth'
+import TeamMessageContainer from "./TeamMessageContainer";
+import WealthContainer from "./WealthContainer";
+import StatisticsContainer from "./StatisticsContainer";
 
 
 
@@ -37,10 +39,10 @@ const App = () => (
 
             <div>
             <Route exact path="/" component={LoginContainer} />
-                <Route exact path = "/:userNamee/TeamMessage" component = {TeamMessage}/>
-                <Route exact path = "/:userNamee/Statistics" component = {Statistics}/>
-                <Route exact path = "/:userNamee/Wealth" component = {Wealth}/>
-                <Route exact path = "/:userNamee/Help" component = {Help}/>
+                <Route exact path = "/TeamMessage" component = {TeamMessageContainer}/>
+                <Route exact path = "/Statistics" component = {StatisticsContainer}/>
+                <Route exact path = "/Wealth" component = {WealthContainer}/>
+                <Route exact path = "/Help" component = {Help}/>
             </div>
         </Router>
     </MuiThemeProvider>

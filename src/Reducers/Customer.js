@@ -7,53 +7,45 @@ import {
 
 
 
-
 const initialState = {
-  customerId: '',
-  username: '',
-  details: {}
+    username: '',
+    isAuthenticated: false,
 };
 const customer = (state = initialState, action) => {
     switch (action.type) {
-        case `${ADD_USER}`:
+        case `${LOGOUT_CUSTOMER}`:{
+            return{
+                ...state,
+                ...action.payload,
+                isAuthenticated:false,
+            };
+        }
+        case `${LOGIN_CUSTOMER}_ACK`: {
             return {
                 ...state,
-                username: action.username
-            }
-        case `${CREATE_CUSTOMER}_ACK`:
+                 ...action.payload,
+                isAuthenticated:true,
+                username:action.payload.username,
+            };
+            // console.error("state.isA "+state.isAuthenticated)
+        }
+        case `${LOGIN_CUSTOMER}_ERR`: {
             return {
                 ...state,
-                ...action.payload
-            }
-        case `${CREATE_CUSTOMER}_ERR`:
-            return {
-                ...state,
-                customerId: ''
-            }
-        case `${LOGIN_CUSTOMER}_ACK`:
-            return {
-                ...state,
-                customerId: action.payload.customerId,
-                details: action.payload
-            }
-        case `${LOGIN_CUSTOMER}_ERR`:
-            return {
-                ...state,
-                customerId: ''
-            }
-        case `${LOGOUT_CUSTOMER}`:
-            return {
-                ...state,
-                customerId: '',
-                details: {}
-            }
+                username: '',
+                isAuthenticated: false,
+            };
+        }
+        // case `${GET_CUSTOMER}`: {
+        //     return {
+        //         ...state,
+        //         username: '',
+        //     };
+        // }
         default:
-            return state
+            return state;
     }
 }
 
-export const isActive = state => {
-    return !(state.customerId === '');
-};
 
 export default customer;

@@ -1,15 +1,13 @@
 // eslint-disable-next-line
 import React from 'react';
-//import PropTypes from 'props-types';
-// import {cyan500} from 'material-ui/styles/colors';
-//import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import {setJwtToken} from "../Actions/Storage";
+import {loginCustomer} from "../Actions/index";
+import * as response from "redux-form";
 // import {isActive} from "../Reducers/index";
 
 
@@ -56,13 +54,8 @@ const styles = {
 //const Main = () => (
 class Login extends React.Component{
 
-//    static propTypes = {
-//
-//    }
     constructor(props){
     super(props)
-//    this.handleUsername = this.handleUsername.bind(this);
-//    this.handlePassword = this.handlePassword.bind(this);
         this.state = {
             username: '',
           password: '',
@@ -86,10 +79,9 @@ class Login extends React.Component{
     handleLogin = () => {
         console.log(this.props);
         const { loginCustomer } = this.props;
-        console.log(loginCustomer);
 
-        console.log("usr = "+this.state.username)
-        console.log("password = "+this.state.password)
+        // console.log("usr = "+this.state.username);
+        // console.log("password = "+this.state.password);
         if (!this.state.username) {
             this.setState({ error: { username: '请输入用户名' } })
             return
@@ -100,31 +92,17 @@ class Login extends React.Component{
             return
         }
 
-        // loginCustomer(this.state.username, this.state.password)
-        //       .then(this.handleClose)
-        //       // error: user does not exist (status 404)
-        //       .catch((err) => {
-        //         // TODO: check if error message is ok
-        //         this.setState({
-        //           username: '',
-        //           password: '',
-        //           error: { username: 'User not found' }
-        //         })
-        //       })
-
-        // const location = this.props.location;
-        // this.setState({isActive:true})
-
-        if (true) {
-            console.log(this.props)
-            // this.props.replaceState(null, '/HomePage');
-            this.props.history.push('/'+this.state.username+'/TeamMessage')
-        } else {
-            // 这里使用 replaceState 方法做了跳转，但在浏览器历史中不会多一条记录，因为是替换了当前的记录
-            // this.props.history.replaceState(null, '/about');
-        }
-
-
+        loginCustomer(this.state.username, this.state.password).then(
+            response => {
+                setJwtToken(response.value.token);
+                //console.log(this.props);
+            }).catch ((err) => {
+            this.setState({
+                username: '',
+                password: '',
+                error: { username: '不存在该用户或用户名与账号不匹配', password: '' }
+            });
+        });
     }
 
     render()
@@ -172,10 +150,5 @@ class Login extends React.Component{
   }
 //);
 
-//Login.propTypes = {
-//  loginCustomer: PropTypes.func,
-//  logoutCustomer: PropTypes.func,
-//  isActive: PropTypes.bool
-//}
 
 export default Login;
