@@ -1,43 +1,41 @@
 import React, { Component} from 'react'
 import { connect } from 'react-redux'
-import Property from "../Components/Property";
+import PropertyForm from "../Components/PropertyForm";
+// import PropertyList from "../Components/PropertyList";
+import { getPropertyList,sellMachine,sellMaterial} from "../Actions/index";
 
 class PropertyContainer extends Component {
     constructor(props) {
-        super(props)
-        this.state = {
-            username: this.props.username,
-            password: '',
-            open: false,
-            error: {
-                username: '',
-                password: '',
-            },
-            navigate: 'false',
-        }
-    }
-
-    componentWillMount() {
-        this.props.loginCustomer;
+        super(props);
     }
 
     render() {
-        const { loginCustomer,isAuthenticated } = this.props;
-        let url;
+        const {getPropertyList, sellMaterial,sellMachine,gameStatus, machineList, materialList,id,wealth} = this.props;
         return(
-            <Property //history={this.props.history}
-                loginCustomer={loginCustomer}
-                username = {this.props.username}
+            <PropertyForm
+                getPropertyList = {getPropertyList}
+                sellMaterial = {sellMaterial}
+                sellMachine = {sellMachine}
 
+                id = {id}
+                gameStatus = {gameStatus}
+                machineList = {machineList}
+                materialList = {materialList}
+                wealth = {wealth}
             />
         );
     }
 }
 
 const mapStateToProps = (state) => ({//定义怎么绑定
-
+    gameStatus: state.customer.gameStatus,
+    machineList:state.propertyList.machineList,
+    materialList:state.propertyList.materialList,
+    wealth:state.propertyList.wealth,
+    id:state.customer.id,
 });
 
 export default connect(// 把需要绑定的东西放进去
     mapStateToProps,
+    {getPropertyList,sellMaterial,sellMachine}
 )(PropertyContainer)

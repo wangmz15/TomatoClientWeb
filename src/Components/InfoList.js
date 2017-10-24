@@ -29,8 +29,6 @@ export default class InfoList extends React.Component{
                     <Divider />
                     <ListItem primaryText="ID" secondaryText={this.props.id} leftIcon={<ActionGrade />} />
                     <Divider />
-                    <ListItem primaryText="财产" secondaryText={this.props.wealth} leftIcon={<ContentSend />} />
-                    <Divider />
                     <ListItem primaryText="排名" secondaryText={this.props.rank} leftIcon={<ContentDrafts />} />
                     <Divider />
                     <ListItem primaryText="游戏状态" secondaryText={this.props.gameStatus} leftIcon={<ContentInbox />} />

@@ -5,18 +5,7 @@ import { Link } from 'react-router-dom'
 const styles = {
     title:{
         'text-align': 'center',
-    },
-    logoutDiv:{
-        width:'100px',
-        height:'50px',
-        // border:'1px solid blue',
-        textAlign: 'center',
-        top:'50%',
-        left:'50%',
-        position:'absolute',
-        marginLeft:' -50px', /*width的一半*/
-        marginTop: '400px', /*height的一半*/
-    },
+    }
 }
 
 export default class MyAppBarAndDrawer extends React.Component{

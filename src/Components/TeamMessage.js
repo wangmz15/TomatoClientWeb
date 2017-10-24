@@ -36,7 +36,7 @@ export default class TeamMessage extends React.Component{
 
     componentWillMount() {
         this.props.getInformation(this.props.id).then(() => {
-            console.log("getInfo之后 wealth = " + this.props.wealth);
+            // console.log("getInfo之后 wealth = " + this.props.wealth);
         });
     }
 
@@ -61,9 +61,8 @@ export default class TeamMessage extends React.Component{
                         username = {this.props.username}
                         // avatar = {this.props.avatar}
                         id = {this.props.id}
-                        wealth = {this.props.wealth}
                         rank = {this.props.rank}
-                        gameStatus = {"尚未开始"}
+                        gameStatus = {this.props.gameStatus}
                     />
 
                 <br/><br/>

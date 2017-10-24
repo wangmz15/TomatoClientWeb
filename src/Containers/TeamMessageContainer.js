@@ -18,12 +18,7 @@ class TeamMessageContainer extends Component {
     }
 
     render() {
-        const {getInformation , username, id, avatar, wealth, rank} = this.props;
-        console.log("usrname??? " + username);
-        console.log("id??? " + id);
-        console.log("avatar??? " + avatar);
-        console.log("wealth??? " + wealth);
-        console.log("rank??? " + rank);
+        const {getInformation , username, id, avatar, rank, gameStatus} = this.props;
 
 
         return(
@@ -34,8 +29,8 @@ class TeamMessageContainer extends Component {
                 username = {username}
                 id = {id}
                 avatar = {avatar}
-                wealth = {wealth}
                 rank = {rank}
+                gameStatus = {gameStatus}
             />
         );
     }
@@ -45,8 +40,8 @@ const mapStateToProps = (state) => ({//定义怎么绑定
     username:state.customer.username,
     id: state.customer.id,
     avatar: state.customer.avatar,
-    wealth: state.customer.wealth,
     rank: state.customer.rank,
+    gameStatus: state.customer.gameStatus,
 });
 
 export default connect(// 把需要绑定的东西放进去

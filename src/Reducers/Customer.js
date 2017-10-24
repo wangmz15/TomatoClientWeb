@@ -7,10 +7,11 @@ import {
 
 const initialState = {
     username: '',
-    id: '',
+    id: 3,
     avatar: '',
     isAuthenticated: false,
-    rank: '',
+    rank: -1,
+    gameStatus:'-1',
 };
 const customer = (state = initialState, action) => {
     switch (action.type) {
@@ -39,7 +40,7 @@ const customer = (state = initialState, action) => {
                 ...action.payload,
             };
         }
-        case `${UPDATE_INFORMATION}`: {
+        case `${UPDATE_INFORMATION}_ACK`: {
             return {
                 ...state,
                 ...action.payload,

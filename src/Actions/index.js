@@ -3,47 +3,49 @@ import request from "superagent";
 import {dispatch} from "redux/es/createStore";
 const API = 'http://localhost:8080/api/client';
 
-export const loginCustomer = (username, password) => (dispatch) => {
-    console.log("调用 loginCustomer");
+export const sellMaterial = (userid, type,number) =>(dispatch) => { //正在测试
+    console.log("调用 sellMaterial")
     let dispatchObj = {
-        type: types.LOGIN_CUSTOMER,
-        payload: {
+        type:types.SELL_MATERIAL,
+        payload:{
             promise:
                 request
-                    .post(`${API}/login`)
-                    .set('Content-Type', 'application/json')//request 头
-                    .accept('application/json')//
+                    .post(`${API}/property/id=${userid}`)
+                    .set('Content-Type', 'application/json')
+                    .accept('application/json')
                     .send({
-                        "username": username,
-                        "password": password,
+                        "type": type,
+                        "number": number,
                     })
                     .then(response => response.body)
         },
     };
-
     return dispatch(dispatchObj);
-};
+}
 
-export const getInformation = (id) =>(dispatch)=> {
-    console.log("调用 getInformation");
+export const sellMachine = (userid, id) =>(dispatch) => { //正在测试
+    console.log("调用 sellMachine")
     let dispatchObj = {
-        type:types.GET_INFORMATION,
+        type:types.SELL_MACHINE,
         payload:{
             promise:
                 request
-                    .get(`${API}/info`)
+                    .post(`${API}/property/id=${userid}`)
                     .set('Content-Type', 'application/json')
                     .accept('application/json')
+                    .send({
+                        "id":id,
+                    })
                     .then(response => response.body)
         },
     };
-    console.log(dispatchObj)
     return dispatch(dispatchObj);
-};
+}
 
-export const getProperty = (id) =>(dispatch)=> {
+export const getPropertyList = (id) =>(dispatch)=> { //通过测试
+    console.log("调用 getPropertyList")
     let dispatchObj = {
-        type:types.GET_PROPERTY,
+        type:types.GET_PROPERTY_LIST,
         payload:{
             promise:
                 request
@@ -74,9 +76,9 @@ export const updateInformation = (id) => (dispatch) => {
     return dispatch(dispatchObj);
 };
 
-export const updateProperty = (id) => (dispatch) => {
+export const updatePropertyList = (id) => (dispatch) => {
     let dispatchObj = {
-        type: types.UPDATE_PROPERTY,
+        type: types.UPDATE_PROPERTY_LIST,
         payload: {
             promise:
                 request
@@ -92,3 +94,40 @@ export const updateProperty = (id) => (dispatch) => {
 };
 
 
+export const getInformation = (id) =>(dispatch)=> {//已经测试通过
+    console.log("调用 getInformation");
+    let dispatchObj = {
+        type:types.GET_INFORMATION,
+        payload:{
+            promise:
+                request
+                    .get(`${API}/info/id=${id}`)
+                    .set('Content-Type', 'application/json')
+                    .accept('application/json')
+                    .then(response => response.body)
+        },
+    };
+    console.log(dispatchObj)
+    return dispatch(dispatchObj);
+};
+
+export const loginCustomer = (username, password) => (dispatch) => {//已经测试通过
+    console.log("调用 loginCustomer");
+    let dispatchObj = {
+        type: types.LOGIN_CUSTOMER,
+        payload: {
+            promise:
+                request
+                    .post(`${API}/login`)
+                    .set('Content-Type', 'application/json')//request 头
+                    .accept('application/json')//
+                    .send({
+                        "username": username,
+                        "password": password,
+                    })
+                    .then(response => response.body)
+        },
+    };
+
+    return dispatch(dispatchObj);
+};
