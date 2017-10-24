@@ -3,6 +3,28 @@ import request from "superagent";
 import {dispatch} from "redux/es/createStore";
 const API = 'http://localhost:8080/api/client';
 
+
+export const produce = (userid, id, left) =>(dispatch) => { //测试
+    console.log("调用 produce")
+    let dispatchObj = {
+        type:types.PRODUCE,
+        payload:{
+            promise:
+                request
+                    .post(`${API}/property/produce/id=${userid}`)
+                    .set('Content-Type', 'application/json')
+                    .accept('application/json')
+                    .send({
+                        "id": id,
+                        "left":left,
+                    })
+                    .then(response => response.body)
+        },
+    };
+    return dispatch(dispatchObj);
+}
+
+
 export const sellMaterial = (userid, type,number) =>(dispatch) => { //测试通过
     console.log("调用 sellMaterial")
     let dispatchObj = {
@@ -22,6 +44,8 @@ export const sellMaterial = (userid, type,number) =>(dispatch) => { //测试通�
     };
     return dispatch(dispatchObj);
 }
+
+
 
 export const sellMachine = (userid, id) =>(dispatch) => { //正在测试
     console.log("调用 sellMachine")

@@ -31,10 +31,10 @@ const customer = (state = initialState, action) => {
             };
         }
         case `${GET_INFORMATION}_ACK`: {
-            console.log({
-                ...state,
-                ...action.payload,
-            });
+            // console.log({
+            //     ...state,
+            //     ...action.payload,
+            // });
             return {
                 ...state,
                 ...action.payload,

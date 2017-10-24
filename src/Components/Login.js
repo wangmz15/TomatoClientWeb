@@ -5,6 +5,7 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {setJwtToken} from "../Actions/Storage";
+import {loginCustomer} from "../Actions/index";
 
 const styles = {
   title: {
@@ -71,11 +72,6 @@ class Login extends React.Component{
     }
 
     handleLogin = () => {
-        console.log(this.props);
-        const { loginCustomer } = this.props;
-
-        // console.log("usr = "+this.state.username);
-        // console.log("password = "+this.state.password);
         if (!this.state.username) {
             this.setState({ error: { username: '请输入用户名' } })
             return
@@ -86,10 +82,9 @@ class Login extends React.Component{
             return
         }
 
-        loginCustomer(this.state.username, this.state.password).then(
+        this.props.loginCustomer(this.state.username, this.state.password).then(
             response => {
                 setJwtToken(response.value.token);
-                //console.log(this.props);
             }).catch ((err) => {
             this.setState({
                 username: '',

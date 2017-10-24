@@ -22,24 +22,33 @@ const property = (state = initialState, action) => {
                 ...action.payload,
             };
         }
+        // case `${SELL_MACHINE}_ERR`: {
+        //     return {
+        //         state
+        //     };
+        // }
         case `${SELL_MATERIAL}_ACK`: {
             return {
                 ...state,
                 ...action.payload,
             };
         }
-        case `${GET_PROPERTY}`: {
+        // case `${SELL_MATERIAL}_ERR`: {
+        //     return {
+        //         state,
+        //     };
+        // }
+        case `${GET_PROPERTY}_ACK`: {
             return {
                 ...state,
                 ...action.payload,
             };
         }
-        case `${UPDATE_PROPERTY}`: {
-            return {
-                ...state,
-                ...action.payload,
-            };
-        }
+        // case `${UPDATE_PROPERTY}_ERR`: {
+        //     return {
+        //         state,
+        //     };
+        // }
         default:
             return state;
     }

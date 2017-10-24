@@ -1,11 +1,10 @@
 import React from 'react';
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
-import LogoutButton from "./LogoutButton";
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Extension from 'material-ui/svg-icons/action/extension';
 import Store from 'material-ui/svg-icons/action/store';
 import SwipeableViews from 'react-swipeable-views';
-import {Avatar, ListItem, Paper, RaisedButton} from "material-ui";
+import {Avatar, Paper, RaisedButton} from "material-ui";
 
 const styles = {
     headline: {
@@ -27,6 +26,16 @@ const styles = {
         textAlign: 'center',
         display: 'inline-block',
     },
+    statusContainerPaper : {
+        width: '90%',
+        height: 40,
+        // marginLeft: 'auto',
+        // marginRight: 'auto',
+        marginLeft:15,
+        marginTop:20,
+        textAlign: 'center',
+        // display: 'inline-block',
+    },
     CirclePaper:{
         height: 100,
         width: 100,
@@ -40,7 +49,12 @@ const styles = {
         margin: 'auto',
         textAlign: 'center',
         display: 'inline-block',
-    }
+    },
+    machineButton:{
+        width: 30,
+        margin:6,
+        // border:'1px solid blue',
+    },
 };
 
 export default class PropertyForm extends React.Component{
@@ -48,10 +62,6 @@ export default class PropertyForm extends React.Component{
         super(props);
         this.state = {
             slideIndex: 0,
-            gameStatus:-1,
-            wealth:-1,
-            materialList:[],
-            machineList:[],
         };
     }
 
@@ -60,20 +70,10 @@ export default class PropertyForm extends React.Component{
             console.log("getPropertyList之后  = " );
             console.log(this.props.materialList[1]);
             console.log(this.props.wealth);
-
-            // this.setState({
-            //     gameStatus:this.props.gameStatus,
-            //     wealth:this.props.wealth,
-            //     materialList:this.props.materialList,
-            //     machineList:this.props.machineList,
-            // })
         });
     }
 
     renderMaterialList (){
-        // console.log("renderMaterialList ")
-        // console.log(this.props.materialList[1]);
-        //return(this.props.materialList.map(item => this.renderMaterial(item)));
         return(this.props.materialList.map(item => {
             return(
                 <Paper style={styles.ContainerPaper}>
@@ -98,9 +98,6 @@ export default class PropertyForm extends React.Component{
     }
 
     renderMachinelList (){
-        // console.log("renderMaterialList ")
-        // console.log(this.props.materialList[1]);
-        //return(this.props.materialList.map(item => this.renderMaterial(item)));
         return(this.props.machineList.map(item => {
             return(
                 <Paper style={styles.ContainerPaper}>
@@ -113,11 +110,12 @@ export default class PropertyForm extends React.Component{
                     </Paper><br/>
                     机器ID: {item.id}<br/>
                     种类: {item.type}<br/>
-                    剩余数量: {item.left}<br/>
+                    剩余生产次数: {item.left}<br/>
                     <br/>
-                    <RaisedButton label="出售" primary={true} onClick={()=>this.props.sellMachine(this.props.id,item.id)} />
-                    {/*{this.renderSellMaterialButton()}*/}
-                    {/*<RaisedButton label="出售" primary={true} onClick={this.handleSellMaterial} />*/}
+                    <div>
+                        <RaisedButton style={styles.machineButton} label="出售" primary={true} onClick={()=>this.props.sellMachine(this.props.id,item.id)} />
+                        <RaisedButton style={styles.machineButton} label="生产" primary={true} onClick={()=>this.props.produce(this.props.id,item.id, item.left)} />
+                    </div>
                     {/*</ListItem>*/}
                 </Paper>
             );
@@ -128,20 +126,32 @@ export default class PropertyForm extends React.Component{
         this.setState({
             slideIndex: value,
         });
-        // console.log("machinelist = " + this.state.machineList);
     };
+    renderStatus = () => {
+        return (
+            <Paper style={styles.statusContainerPaper}>
+                <table style={styles.statusContainerPaper}>
+                    <tr>
+                        <td>比赛状态: {this.props.gameStatus}</td>
+                        <td>剩余财产: {this.props.wealth}</td>
+                    </tr>
+                </table>
+            </Paper>
+
+        );
+    }
+
 
     render(){
         return(
             <div>
                 <MyAppBarAndDrawer text = {'资产'} />
-
                 <div>
                     <Tabs onChange={this.handleChange} value={this.state.slideIndex}>
                         <Tab  value={0} icon={<Extension />} label="材料"/>
                         <Tab  value={1} icon={<Store />} label="机器"/>
                     </Tabs>
-
+                    {this.renderStatus()}
                     <SwipeableViews
                         index={this.state.slideIndex}
                         onChangeIndex={this.handleChange}>
@@ -154,8 +164,6 @@ export default class PropertyForm extends React.Component{
                     </SwipeableViews>
                 </div>
                 <br/><br/>
-
-
             </div>
         )
     }
