@@ -48,7 +48,6 @@ export default class PropertyForm extends React.Component{
         super(props);
         this.state = {
             slideIndex: 0,
-
             gameStatus:-1,
             wealth:-1,
             materialList:[],
@@ -74,13 +73,11 @@ export default class PropertyForm extends React.Component{
     renderMaterialList (){
         // console.log("renderMaterialList ")
         // console.log(this.props.materialList[1]);
-        return(this.props.materialList.map(item => this.renderMaterial(item)));
-    }
-
-    renderMaterial(item){
-        return(
-            <Paper style={styles.ContainerPaper}>
-                {/*<ListItem>*/}
+        //return(this.props.materialList.map(item => this.renderMaterial(item)));
+        return(this.props.materialList.map(item => {
+            return(
+                <Paper style={styles.ContainerPaper}>
+                    {/*<ListItem>*/}
                     <Paper style={styles.CirclePaper} circle={true} zDepth={2}>
                         <Avatar
                             //src="material-ui/svg-icons/action/store"
@@ -94,18 +91,39 @@ export default class PropertyForm extends React.Component{
                     数量: {item.number}
                     <br/><br/>
                     <RaisedButton label="出售" primary={true} onClick={()=>this.props.sellMaterial(this.props.id,item.type)} />
-                    {/*{this.renderSellMaterialButton()}*/}
-                    {/*<RaisedButton label="出售" primary={true} onClick={this.handleSellMaterial} />*/}
-                {/*</ListItem>*/}
-            </Paper>
-        );
+                    {/*</ListItem>*/}
+                </Paper>
+            );
+        }));
     }
 
-    // renderSellMaterialButton(type){
-    //     return(
-    //
-    //     );
-    // }
+    renderMachinelList (){
+        // console.log("renderMaterialList ")
+        // console.log(this.props.materialList[1]);
+        //return(this.props.materialList.map(item => this.renderMaterial(item)));
+        return(this.props.machineList.map(item => {
+            return(
+                <Paper style={styles.ContainerPaper}>
+                    {/*<ListItem>*/}
+                    <Paper style={styles.CirclePaper} circle={true} zDepth={2}>
+                        <Avatar
+                            //src="material-ui/svg-icons/action/store"
+                            style={styles.avatar}
+                        />
+                    </Paper><br/>
+                    机器ID: {item.id}<br/>
+                    种类: {item.type}<br/>
+                    剩余数量: {item.left}<br/>
+                    <br/>
+                    <RaisedButton label="出售" primary={true} onClick={()=>this.props.sellMachine(this.props.id,item.id)} />
+                    {/*{this.renderSellMaterialButton()}*/}
+                    {/*<RaisedButton label="出售" primary={true} onClick={this.handleSellMaterial} />*/}
+                    {/*</ListItem>*/}
+                </Paper>
+            );
+        }));
+    }
+
     handleChange = (value) =>{
         this.setState({
             slideIndex: value,
@@ -120,8 +138,8 @@ export default class PropertyForm extends React.Component{
 
                 <div>
                     <Tabs onChange={this.handleChange} value={this.state.slideIndex}>
-                        <Tab  value={0} icon={<Extension />} label="material"/>
-                        <Tab  value={1} icon={<Store />} label="machine"/>
+                        <Tab  value={0} icon={<Extension />} label="材料"/>
+                        <Tab  value={1} icon={<Store />} label="机器"/>
                     </Tabs>
 
                     <SwipeableViews
@@ -131,12 +149,12 @@ export default class PropertyForm extends React.Component{
                             {this.renderMaterialList()}
                         </div>
                         <div style={styles.slide}>
-                            <h1>机器</h1>
+                            {this.renderMachinelList()}
                         </div>
                     </SwipeableViews>
                 </div>
                 <br/><br/>
-                <LogoutButton/>
+
 
             </div>
         )

@@ -3,14 +3,14 @@ import request from "superagent";
 import {dispatch} from "redux/es/createStore";
 const API = 'http://localhost:8080/api/client';
 
-export const sellMaterial = (userid, type,number) =>(dispatch) => { //正在测试
+export const sellMaterial = (userid, type,number) =>(dispatch) => { //测试通过
     console.log("调用 sellMaterial")
     let dispatchObj = {
         type:types.SELL_MATERIAL,
         payload:{
             promise:
                 request
-                    .post(`${API}/property/id=${userid}`)
+                    .post(`${API}/property/sellmaterial/id=${userid}`)
                     .set('Content-Type', 'application/json')
                     .accept('application/json')
                     .send({
@@ -30,7 +30,7 @@ export const sellMachine = (userid, id) =>(dispatch) => { //正在测试
         payload:{
             promise:
                 request
-                    .post(`${API}/property/id=${userid}`)
+                    .post(`${API}/property/sellmachine/id=${userid}`)
                     .set('Content-Type', 'application/json')
                     .accept('application/json')
                     .send({
