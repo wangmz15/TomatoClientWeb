@@ -1,6 +1,5 @@
 import React, { Component} from 'react'
 import { connect } from 'react-redux'
-import Wealth from "../Components/Wealth";
 import Statistics from "../Components/Statistics";
 
 class StatisticsContainer extends Component {

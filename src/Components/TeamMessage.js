@@ -2,12 +2,10 @@ import React from 'react';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle'
 import IconButton from 'material-ui/IconButton';
 
-import MemberTable from "./MemberTable";
+// import MemberTable from "./MemberTable";
+import InfoList from "./InfoList";
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
 import LogoutButton from "./LogoutButton";
-import { removeJwtToken } from '../Actions/Storage';
-import Redirect from "react-router-dom/es/Redirect";
-import { loginCustomer, logoutCustomer} from "../Actions/index";
 
 const styles = {
     largeAvatarIcon: {
@@ -22,38 +20,33 @@ const styles = {
         top:"30px",
         left:"50%",
         marginLeft:' -100px',
-        // border:'1px solid blue',
+        // border :'1px solid blue',
     },
 
 }
 export default class TeamMessage extends React.Component{
     constructor(props){
         super(props)
-//    this.handleUsername = this.handleUsername.bind(this);
-//    this.handlePassword = this.handlePassword.bind(this);
-        this.state = {
-            username: this.props.username,
-            password: '',
-            open: false,
-            error: {
-                username: '',
-                password: '',
-            },
-            navigate:false,
+        this.state ={
+            username:'',
+            id: '',
+            wealth:'',
         }
-        // console.log("log ::: " + this.props.username)
     }
-    handleLogout = () => {
-        removeJwtToken();
-        // this.props.history.replace('/');
-        window.location.href = '/';
-    };
+
+    componentWillMount() {
+        this.props.getInformation(this.props.id).then(() => {
+            console.log("getInfo之后 wealth = " + this.props.wealth);
+        });
+    }
+
 
     changeAvatar = () => {
-        console.log("change avatar");
-    }
+        console.log("change Avatar")
+    };
 
     render(){
+
         return(
             <div>
                 <MyAppBarAndDrawer text = {'队伍信息'} history = {this.props.history}/>
@@ -63,8 +56,17 @@ export default class TeamMessage extends React.Component{
                     style={styles.largeDIV}>
                     <AccountCircle onClick = {this.changeAvatar}/>
                 </IconButton>
+                <br/><br/>
+                    <InfoList
+                        username = {this.props.username}
+                        // avatar = {this.props.avatar}
+                        id = {this.props.id}
+                        wealth = {this.props.wealth}
+                        rank = {this.props.rank}
+                        gameStatus = {"尚未开始"}
+                    />
 
-                <MemberTable username = {this.state.username}/>
+                <br/><br/>
                 <LogoutButton />
                 {/*<LogoutButton onClick={this.handleLogout}/>*/}
             </div>

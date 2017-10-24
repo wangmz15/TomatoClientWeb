@@ -10,11 +10,11 @@ const styles = {
         height:'50px',
         // border:'1px solid blue',
         textAlign: 'center',
-        top:'50%',
+        // top:'50%',
         left:'50%',
         position:'absolute',
         marginLeft:' -50px', /*width的一半*/
-        marginTop: '400px', /*height的一半*/
+        // marginTop: '400px', /*height的一半*/
     },
 }
 

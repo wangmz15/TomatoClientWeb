@@ -3,18 +3,10 @@ import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
 import LogoutButton from "./LogoutButton";
 import MyTab from "./MyTab";
 
-export default class Helpe extends React.Component{
+export default class Property extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            username: '',
-            password: '',
-            open: false,
-            error: {
-                username: '',
-                password: '',
-            },
-            navigate:'false',
         }
     }
     handleLogout = () => {

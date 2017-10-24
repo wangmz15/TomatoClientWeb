@@ -18,8 +18,8 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import LoginContainer from './Containers/LoginContainer'
 import TeamMessageContainer from "./Containers/TeamMessageContainer";
 import StatisticsContainer from "./Containers/StatisticsContainer";
-import WealthContainer from "./Containers/WealthContainer";
 import Help from "./Containers/Help";
+import PropertyContainer from "./Containers/PropertyContainer";
 
 
 const middleware = [
@@ -44,10 +44,6 @@ const muiTheme = getMuiTheme({
     },
 });
 
-const supportsHistory = 'pushState' in window.history;
-
-// store.dispatch(inicialWholePage())
-
 ReactDOM.render(
     <Provider store={store}>
         <MuiThemeProvider muiTheme = {muiTheme}>
@@ -56,7 +52,7 @@ ReactDOM.render(
                     <Route exact path="/" component={LoginContainer} />
                     <Route exact path = "/TeamMessage" component = {TeamMessageContainer}/>
                     <Route exact path = "/Statistics" component = {StatisticsContainer}/>
-                    <Route exact path = "/Wealth" component = {WealthContainer}/>
+                    <Route exact path = "/Property" component = {PropertyContainer}/>
                     <Route exact path = "/Help" component = {Help}/>
                 </div>
             </Router>

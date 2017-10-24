@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -6,11 +5,6 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {setJwtToken} from "../Actions/Storage";
-import {loginCustomer} from "../Actions/index";
-import * as response from "redux-form";
-// import {isActive} from "../Reducers/index";
-
-
 
 const styles = {
   title: {

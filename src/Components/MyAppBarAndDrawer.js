@@ -56,6 +56,7 @@ export default class MyAppBarAndDrawer extends React.Component{
                 />
 
                 <Drawer
+                    width={150}
                     open={this.state.navigate}
                     onRequestChange={(navigate) => this.setState({navigate})}
                     docked={false}
@@ -65,7 +66,7 @@ export default class MyAppBarAndDrawer extends React.Component{
                     {/*<MenuItem onClick={this.handleStatisticsClick}>统计</MenuItem>*/}
                     {/*<MenuItem onClick={this.handleHelpClick}>帮助</MenuItem>*/}
                     <MenuItem containerElement={<Link to="/TeamMessage" />} >队伍信息</MenuItem>
-                    <MenuItem containerElement={<Link to="/Wealth" />}>资产</MenuItem>
+                    <MenuItem containerElement={<Link to="/Property" />}>资产</MenuItem>
                     <MenuItem containerElement={<Link to="/Statistics" />}>统计</MenuItem>
                     <MenuItem containerElement={<Link to="/Help" />}>帮助</MenuItem>
                 </Drawer>

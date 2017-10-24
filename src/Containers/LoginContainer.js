@@ -20,13 +20,13 @@ class LoginContainer extends Component {
             // console.log("if " + isAuthenticated);
             // this.props.history.replace('/TeamMessage')
             // this.props.username = '';
-            console.log("state.username = " + username)
+            console.log("login! username = " + username)
             return (
                 <Redirect to= "/TeamMessage" />);
         }
         // return(<div>err</div>);
         else {
-            console.log("else " +isAuthenticated);
+            console.log("not login!");
             return (
                 <Login //history={this.props.history}
                         loginCustomer = {loginCustomer}
