@@ -5,7 +5,6 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {setJwtToken} from "../Actions/Storage";
-import {loginCustomer} from "../Actions/index";
 
 const styles = {
   title: {

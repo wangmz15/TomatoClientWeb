@@ -1,11 +1,10 @@
 import React from 'react';
-import {
-    DatePicker, Dialog, FlatButton, RaisedButton, Table, TableBody, TableHeader, TableColumnRow,
-    TextField
-} from "material-ui";
-import Divider from 'material-ui/Divider';
-import SelectTeam from "./SelectTeam";
+import {Dialog, FlatButton, RaisedButton, TextField, SelectField, MenuItem} from "material-ui";
 
+const items = [];
+for (let i = 1; i < 101; i++ ) {
+    items.push(<MenuItem value={i} key={i} primaryText={`${i}`} />);
+}
 /**
  * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
  */
@@ -21,6 +20,7 @@ const styles = {
     table:{
         textAlign:'left',
         width:"100%",
+        fontSize:14,
         // border:'1px solid blue',
         // left:"50%",
         // marginLeft:"10%",
@@ -30,6 +30,11 @@ const styles = {
         width: '100%',
         textAlign: 'center',
     },
+    selectTeam: {
+        width: "100%",
+        textAlign:'center',
+        // marginLeft:"15%",
+    },
 };
 
 
@@ -38,28 +43,41 @@ export default class MaterialDialog extends React.Component {
         super(props);
         this.state = {
             sellDialogOpen: false,
+            selectedValue: null,
+            sellNum:null,
+            sellPrice:null,
         }
     }
-
-    handleOpen = () => { this.setState({machineDialogOpen: true});};
-
-    // handleSellClose = () => {this.setState({sellDialogOpen: false});};
-    // handleProduceClose = () => {this.setState({produceDialogOpen: false});};
-
     handleClose = () => {
         this.setState({
             sellDialogOpen: false,
+            selectedValue: null,
+            sellNum:null,
+            sellPrice:null,
         });
     };
 
-    sellMaterial= ()=>{
-        this.setState({sellDialogOpen:true});
-        this.props.sellMaterial().then(
+    handleSubmitSell =()=>{
+        this.props.sellMaterial(this.props.id,this.props.material,this.state.sellNum,this.state.sellPrice).then(
 
         ).catch((err)=>{
 
-        })
+        });
+        this.handleClose();
     };
+    handleChange = (event, index, value) => {
+        this.setState({selectedValue:value});
+    };
+    handleSellNum = (event) =>{
+        this.setState({ sellNum: event.target.value })
+    };
+    handleSellPrice = (event) =>{
+        this.setState({ sellPrice: event.target.value })
+    };
+    sellMachine = ()=>{this.setState({sellDialogOpen:true});};
+
+    sellMaterial = ()=>{this.setState({sellDialogOpen:true});};
+
     render() {
         const actions = [
             <FlatButton
@@ -71,7 +89,8 @@ export default class MaterialDialog extends React.Component {
                 label="确认"
                 primary={true}
                 keyboardFocused={true}
-                onClick={this.handleClose}
+                disabled={!((this.state.selectedValue) && (this.state.sellNum) && (this.state.sellPrice))}
+                onClick={this.handleSubmitSell}
             />,
         ];
 
@@ -83,12 +102,26 @@ export default class MaterialDialog extends React.Component {
                         title="出售材料"
                         actions={actions}
                         open={this.state.sellDialogOpen}
-                        onRequestClose={this.handleClose}
-                >
+                        onRequestClose={this.handleClose}>
                     <table style={styles.table}>
-                        <tr><td>出售队伍ID：</td><td><SelectTeam floatingLabelText="队伍ID"/></td></tr>
-                        <tr><td>出售数量：</td><td><TextField hintText={"1"} style={styles.input}/>个</td></tr>
-                        <tr><td>出售价格：</td><td><TextField hintText={"100"}style={styles.input}/>／个</td></tr>
+                        <tr><td>出售队伍ID：</td><td>
+                            <SelectField
+                                style={styles.selectTeam}
+                                value={this.state.selectedValue}
+                                onChange={this.handleChange}
+                                maxHeight={200}>
+                                {items}
+                            </SelectField></td></tr>
+                        <tr><td>出售数量：</td><td>
+                            <TextField hintText={"1"}
+                                       style={styles.input}
+                                       value={this.state.sellNum}
+                                       onChange={this.handleSellNum}/>份</td></tr>
+                        <tr><td>出售价格：</td><td>
+                            <TextField hintText={"100"}
+                                       style={styles.input}
+                                       value={this.state.sellPrice}
+                                       onChange={this.handleSellPrice}/>元/份</td></tr>
                     </table>
                 </Dialog>
             </div>

@@ -1,14 +1,12 @@
 import React from 'react';
 import History from 'material-ui/svg-icons/action/history';
 import Favorite from 'material-ui/svg-icons/action/favorite-border';
-
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
 import LogoutButton from "./LogoutButton";
-import Extension from 'material-ui/svg-icons/action/extension';
-import Store from 'material-ui/svg-icons/action/store';
+// import Extension from 'material-ui/svg-icons/action/extension';
+// import Store from 'material-ui/svg-icons/action/store';
 import SwipeableViews from 'react-swipeable-views';
-import {Avatar, BottomNavigation, BottomNavigationItem, FontIcon, Paper, RaisedButton} from "material-ui";
-const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
+import { BottomNavigation, BottomNavigationItem, Paper} from "material-ui";
 
 
 

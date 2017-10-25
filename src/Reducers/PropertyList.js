@@ -1,6 +1,5 @@
 import {
-    GET_PROPERTY, GET_PROPERTY_LIST, UPDATE_PROPERTY, UPDATE_PROPERTY_LIST,
-} from '../Constants/ActionTypes'
+    GET_PROPERTY_LIST,  UPDATE_PROPERTY_LIST,} from '../Constants/ActionTypes'
 
 const initialState = {
     wealth:-1,

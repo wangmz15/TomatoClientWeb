@@ -2,19 +2,20 @@ import React, { Component} from 'react'
 import { connect } from 'react-redux'
 import PropertyForm from "../Components/PropertyForm";
 // import PropertyList from "../Components/PropertyList";
-import {getPropertyList, produce, sellMachine, sellMaterial} from "../Actions/index";
+import {getInformation, getPropertyList, produce, sellMachine, sellMaterial} from "../Actions/index";
 
 class PropertyContainer extends Component {
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     render() {
-        const {getPropertyList, sellMaterial,sellMachine,produce,
-            gameStatus, machineList, materialList,id,wealth} = this.props;
+        const {getPropertyList, sellMaterial,sellMachine,produce,getInformation,
+            gameStatus, machineList, materialList,id,wealth,} = this.props;
         return(
             <PropertyForm
                 getPropertyList = {getPropertyList}
+                getInformation = {getInformation}
                 sellMaterial = {sellMaterial}
                 sellMachine = {sellMachine}
                 produce = {produce}
@@ -39,5 +40,5 @@ const mapStateToProps = (state) => ({//定义怎么绑定
 
 export default connect(// 把需要绑定的东西放进去
     mapStateToProps,
-    {getPropertyList,sellMaterial,sellMachine,produce}
+    {getPropertyList,sellMaterial,sellMachine,produce,getInformation}
 )(PropertyContainer)

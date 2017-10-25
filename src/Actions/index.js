@@ -1,6 +1,6 @@
 import * as types from '../Constants/ActionTypes'
 import request from "superagent";
-import {dispatch} from "redux/es/createStore";
+// import {dispatch} from "redux/es/createStore";
 const API = 'http://localhost:8080/api/client';
 
 export const getHistory = (id) =>(dispatch)=> { //通过测试
@@ -21,8 +21,8 @@ export const getHistory = (id) =>(dispatch)=> { //通过测试
 };
 
 
-export const produce = (userid, id, left) =>(dispatch) => { //测试通过
-    console.log("调用 produce")
+export const produce = (userid, id,number,price) =>(dispatch) => { //测试通过
+    console.log("调用 produce");
     let dispatchObj = {
         type:types.PRODUCE,
         payload:{
@@ -33,7 +33,8 @@ export const produce = (userid, id, left) =>(dispatch) => { //测试通过
                     .accept('application/json')
                     .send({
                         "id": id,
-                        "left":left,
+                        "number":number,
+                        "price":price,
                     })
                     .then(response => response.body)
         },
@@ -42,8 +43,8 @@ export const produce = (userid, id, left) =>(dispatch) => { //测试通过
 }
 
 
-export const sellMaterial = (userid, type,number) =>(dispatch) => { //测试通过
-    console.log("调用 sellMaterial")
+export const sellMaterial = (userid,material,number,price) =>(dispatch) => { //测试通过
+    console.log("调用 sellMaterial");
     let dispatchObj = {
         type:types.SELL_MATERIAL,
         payload:{
@@ -53,8 +54,9 @@ export const sellMaterial = (userid, type,number) =>(dispatch) => { //测试通�
                     .set('Content-Type', 'application/json')
                     .accept('application/json')
                     .send({
-                        "type": type,
-                        "number": number,
+                        "material": material,
+                        "number":number,
+                        "price":price,
                     })
                     .then(response => response.body)
         },

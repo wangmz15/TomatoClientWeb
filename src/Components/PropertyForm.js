@@ -2,9 +2,9 @@ import React from 'react';
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
 import Extension from 'material-ui/svg-icons/action/extension';
 import Store from 'material-ui/svg-icons/action/store';
-import Nature from 'material-ui/svg-icons/image/nature'
+// import Nature from 'material-ui/svg-icons/image/nature'
 import SwipeableViews from 'react-swipeable-views';
-import {Avatar, BottomNavigation, BottomNavigationItem, FontIcon, Paper, RaisedButton} from "material-ui";
+import {Avatar, BottomNavigation, BottomNavigationItem, Paper} from "material-ui";
 // import Dialog from 'material-ui/Dialog';
 // import FlatButton from 'material-ui/FlatButton';
 // import DatePicker from 'material-ui/DatePicker';
@@ -23,7 +23,7 @@ const styles = {
         marginLeft:"30%",
         // border:0,
     },
-    statustable:{
+    statusTable:{
         textAlign: 'center',
         fontSize: 13,
         width:"80%",
@@ -74,7 +74,6 @@ const styles = {
     materialButton:{
         width: 30,
         margin:6,
-        // border:'1px solid blue',
     },
 };
 
@@ -87,10 +86,8 @@ export default class PropertyForm extends React.Component{
     }
 
     componentWillMount() {
+        this.props.getInformation(this.props.id).then(()=>{});
         this.props.getPropertyList(this.props.id).then(() => {
-            console.log("getPropertyList之后  = " );
-            console.log(this.props.materialList[1]);
-            console.log(this.props.wealth);
         });
     }
 
@@ -111,7 +108,6 @@ export default class PropertyForm extends React.Component{
         return(this.props.materialList.map(item => {
             return(
                 <Paper style={styles.ContainerPaper}>
-                    {/*<ListItem>*/}
                     <Paper style={styles.CirclePaper} circle={true} zDepth={2}>
                         <Avatar
                             src={this.renderAvatar(item.type)}
@@ -128,15 +124,14 @@ export default class PropertyForm extends React.Component{
                         sellMaterial = {this.props.sellMaterial}
 
                         material = {item}
+                        id = {this.props.id}
                     />
-                    {/*<RaisedButton style={styles.materialButton} label="出售" primary={true} onClick={()=>this.props.sellMaterial(this.props.id,item.type)} />*/}
-                    {/*</ListItem>*/}
                 </Paper>
             );
         }));
     }
 
-    renderMachinelList (){
+    renderMachineList (){
         return(this.props.machineList.map(item => {
             return(
                 <Paper style={styles.ContainerPaper}>
@@ -159,10 +154,8 @@ export default class PropertyForm extends React.Component{
                             produce = {this.props.produce}
 
                             machine = {item}
+                            id = {this.props.id}
                         />
-                        {/*<RaisedButton style={styles.machineButton} label="出售" primary={true} onClick={this.sellMachine} />*/}
-                        {/*<RaisedButton style={styles.machineButton} label="出售" primary={true} onClick={()=>this.props.sellMachine(this.props.id,item.id)} />*/}
-                        {/*<RaisedButton style={styles.machineButton} label="生产" primary={true} onClick={()=>this.props.produce(this.props.id,item.id, item.left)} />*/}
                     </div>
                     {/*</ListItem>*/}
                 </Paper>
@@ -177,7 +170,7 @@ export default class PropertyForm extends React.Component{
     renderStatus = () => {
         return (
             <Paper style={styles.statusContainerPaper}>
-                <table style={styles.statustable}>
+                <table style={styles.statusTable}>
                     <tr>
                         <td>比赛状态：{this.props.gameStatus}</td>
                         <td>剩余财产：{this.props.wealth}</td>
@@ -186,10 +179,10 @@ export default class PropertyForm extends React.Component{
             </Paper>
 
         );
-    }
+    };
     select = (index) => {
         this.setState({selectedIndex: index});
-    }
+    };
 
 
     render(){
@@ -215,7 +208,7 @@ export default class PropertyForm extends React.Component{
                 <SwipeableViews
                         index={this.state.selectedIndex} onChangeIndex={this.handleChange}>
                     <div style={styles.slide}>
-                        {this.renderMachinelList()}
+                        {this.renderMachineList()}
                     </div>
                     <div style={styles.slide}>
                         {this.renderMaterialList()}

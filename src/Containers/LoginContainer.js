@@ -4,8 +4,6 @@ import {loginCustomer} from '../Actions'
 import {Redirect} from 'react-router-dom'
 // import { isActive } from '../Reducers'
 import Login from '../Components/Login'
-import state from "../Reducers/Customer";
-
 class LoginContainer extends Component {
 
     // static propTypes = {

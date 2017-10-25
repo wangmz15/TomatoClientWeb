@@ -1,6 +1,5 @@
 import AppBar from 'material-ui/AppBar';
 import React from 'react'
-import History from 'material-ui/svg-icons/action/history';
 import {Drawer, MenuItem} from "material-ui";
 import { Link } from 'react-router-dom'
 const styles = {
