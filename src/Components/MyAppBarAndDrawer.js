@@ -18,25 +18,7 @@ export default class MyAppBarAndDrawer extends React.Component{
         }
     }
     handleNavigation = () => this.setState({navigate:!this.state.navigate})
-
-    // handleTeamMessageClick = () => {
-    //     this.setState({navigate:false})
-    //     this.props.history.replace('/'+this.state.username+'/TeamMessage')
-    // }
-    // handleWealthClick = () => {
-    //     this.setState({navigate:false})
-    //     this.props.history.replace('/'+this.state.username+'/Wealth')
-    // }
-    // handleStatisticsClick = () => {
-    //     this.setState({navigate:false})
-    //     this.props.history.replace('/'+this.state.username+'/Statistics')
-    // }
-    // handleHelpClick = () => {
-    //     this.setState({navigate:false})
-    //     this.props.history.replace('/'+this.state.username+'/Help')
-    // }
     render(){
-        // console.log(this.state.navigate)
         return(
             <div>
                 <AppBar

@@ -57,7 +57,7 @@ export default class TeamMessage extends React.Component{
 
         return(
             <div>
-                <MyAppBarAndDrawer text = {'队伍信息'} history = {this.props.history}/>
+                <MyAppBarAndDrawer text = {'队伍信息'}/>
 
                 <IconButton
                     iconStyle={styles.largeAvatarIcon}

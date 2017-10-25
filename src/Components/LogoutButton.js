@@ -14,7 +14,7 @@ const styles = {
         left:'50%',
         position:'absolute',
         marginLeft:' -50px', /*width的一半*/
-        // marginTop: '400px', /*height的一半*/
+        marginTop: '5%', /*height的一半*/
     },
 }
 
