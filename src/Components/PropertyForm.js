@@ -1,10 +1,11 @@
 import React from 'react';
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
-import {Tabs, Tab} from 'material-ui/Tabs';
 import Extension from 'material-ui/svg-icons/action/extension';
 import Store from 'material-ui/svg-icons/action/store';
 import SwipeableViews from 'react-swipeable-views';
-import {Avatar, Paper, RaisedButton} from "material-ui";
+import {Avatar, BottomNavigation, BottomNavigationItem, FontIcon, Paper, RaisedButton} from "material-ui";
+// const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
+// const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
 
 const styles = {
     headline: {
@@ -12,9 +13,6 @@ const styles = {
         paddingTop: 16,
         marginBottom: 12,
         fontWeight: 400,
-    },
-    slide: {
-        // padding: ,
     },
     ContainerPaper : {
         width: '90%',
@@ -61,7 +59,8 @@ export default class PropertyForm extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            slideIndex: 0,
+            // slideIndex: 0,
+            selectedIndex: 0,
         };
     }
 
@@ -121,12 +120,6 @@ export default class PropertyForm extends React.Component{
             );
         }));
     }
-
-    handleChange = (value) =>{
-        this.setState({
-            slideIndex: value,
-        });
-    };
     renderStatus = () => {
         return (
             <Paper style={styles.statusContainerPaper}>
@@ -140,30 +133,40 @@ export default class PropertyForm extends React.Component{
 
         );
     }
+    select = (index) => {
+        this.setState({selectedIndex: index});
+    }
 
 
     render(){
         return(
             <div>
                 <MyAppBarAndDrawer text = {'资产'} />
-                <div>
-                    <Tabs onChange={this.handleChange} value={this.state.slideIndex}>
-                        <Tab  value={0} icon={<Extension />} label="材料"/>
-                        <Tab  value={1} icon={<Store />} label="机器"/>
-                    </Tabs>
-                    {this.renderStatus()}
-                    <SwipeableViews
-                        index={this.state.slideIndex}
-                        onChangeIndex={this.handleChange}>
-                        <div style={styles.slide}>
-                            {this.renderMaterialList()}
-                        </div>
-                        <div style={styles.slide}>
-                            {this.renderMachinelList()}
-                        </div>
-                    </SwipeableViews>
-                </div>
-                <br/><br/>
+                <Paper zDepth={1}>
+                    <BottomNavigation selectedIndex={this.state.selectedIndex}>
+                        <BottomNavigationItem
+                            label="机器"
+                            icon={<Store />}
+                            onClick={() => this.select(0)}
+                        />
+                        <BottomNavigationItem
+                            label="材料"
+                            icon={<Extension />}
+                            onClick={() => this.select(1)}
+                        />
+                    </BottomNavigation>
+                </Paper>
+                {this.renderStatus()}
+
+                <SwipeableViews
+                        index={this.state.selectedIndex} onChangeIndex={this.handleChange}>
+                    <div style={styles.slide}>
+                        {this.renderMachinelList()}
+                    </div>
+                    <div style={styles.slide}>
+                        {this.renderMaterialList()}
+                    </div>
+                </SwipeableViews><br/><br/>
             </div>
         )
     }

@@ -3,8 +3,25 @@ import request from "superagent";
 import {dispatch} from "redux/es/createStore";
 const API = 'http://localhost:8080/api/client';
 
+export const getHistory = (id) =>(dispatch)=> { //通过测试
+    console.log("调用 getHistory")
+    let dispatchObj = {
+        type:types.GET_HISTORY,
+        payload:{
+            promise:
+                request
+                    .get(`${API}/history/id=${id}`)
+                    .set('Content-Type', 'application/json')
+                    .accept('application/json')
+                    .then(response => response.body)
+        },
+    };
 
-export const produce = (userid, id, left) =>(dispatch) => { //测试
+    return dispatch(dispatchObj);
+};
+
+
+export const produce = (userid, id, left) =>(dispatch) => { //测试通过
     console.log("调用 produce")
     let dispatchObj = {
         type:types.PRODUCE,
@@ -47,7 +64,7 @@ export const sellMaterial = (userid, type,number) =>(dispatch) => { //测试通�
 
 
 
-export const sellMachine = (userid, id) =>(dispatch) => { //正在测试
+export const sellMachine = (userid, id) =>(dispatch) => { //测试通过
     console.log("调用 sellMachine")
     let dispatchObj = {
         type:types.SELL_MACHINE,
