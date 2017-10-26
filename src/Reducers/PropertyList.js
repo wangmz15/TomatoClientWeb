@@ -9,15 +9,9 @@ const initialState = {
 const propertyList = (state = initialState, action) => {
     switch (action.type) {
         case `${GET_PROPERTY_LIST}_ACK`: {
-            // console.log({
-            //     ...state,
-            //     ...action.payload,
-            //     // machineList:action.pa
-            // })
             return {
                 ...state,
                 ...action.payload,
-                // machineList:action.pa
             };
         }
         case `${GET_PROPERTY_LIST}_ERR`: {

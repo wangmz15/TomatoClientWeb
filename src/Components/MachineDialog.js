@@ -51,7 +51,6 @@ export default class MachineDialog extends React.Component {
             sellDialogOpen: false,
             produceDialogOpen:false,
 
-            sellNum:null,
             sellPrice:null,
             sellUserID:null,
 
@@ -63,7 +62,6 @@ export default class MachineDialog extends React.Component {
             sellDialogOpen: false,
             produceDialogOpen:false,
 
-            sellNum:null,
             sellPrice:null,
             sellUserID:null,
 
@@ -72,7 +70,7 @@ export default class MachineDialog extends React.Component {
     };
 
     handleSubmitSell =()=>{
-        this.props.sellMachine(this.props.id, this.props.machine.id,this.state.sellNum,this.state.sellPrice, this.state.sellUserID).then(
+        this.props.sellMachine(this.props.id, this.props.machine.id,this.state.sellPrice, this.state.sellUserID).then(
 
         ).catch((err)=>{
 
@@ -88,9 +86,7 @@ export default class MachineDialog extends React.Component {
         this.handleClose();
     };
     handleChange = (event, index, value) => {this.setState({sellUserID:value});};
-    
-    handleSellNum = (event) =>{this.setState({ sellNum: event.target.value })};
-    
+
     handleSellPrice = (event) =>{this.setState({ sellPrice: event.target.value })};
 
     handleProduceTime = (event) =>{this.setState({ produceTime: event.target.value });};
@@ -150,11 +146,6 @@ export default class MachineDialog extends React.Component {
                             maxHeight={200}>
                                 {items}
                             </SelectField></td></tr>
-                        <tr><td>出售数量：</td><td>
-                            <TextField hintText={"1"}
-                                       style={styles.input}
-                                       value={this.state.sellNum}
-                                       onChange={this.handleSellNum}/>台</td></tr>
                         <tr><td>出售价格：</td><td>
                             <TextField hintText={"100"}
                                        style={styles.input}

@@ -21,10 +21,10 @@ export const changeAvatar = (id,newAvatar) => (dispatch) =>{
 };
 
 
-export const getHistory = (id) =>(dispatch)=> { //通过测试
-    console.log("调用 getHistory");
+export const getHistoryList = (id) =>(dispatch)=> { //测试
+    console.log("调用 getHistory id = "+ id);
     let dispatchObj = {
-        type:types.GET_HISTORY,
+        type:types.GET_HISTORY_LIST,
         payload:{
             promise:
                 request
@@ -96,7 +96,6 @@ export const sellMachine = (userid, id,number,price,recieverID) =>(dispatch) => 
                     .accept('application/json')
                     .send({
                         "id":id,
-                        "number":number,
                         "price":price,
                         "recieverID":recieverID,
                     })
