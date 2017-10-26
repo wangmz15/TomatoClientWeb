@@ -43,7 +43,8 @@ export default class MaterialDialog extends React.Component {
         super(props);
         this.state = {
             sellDialogOpen: false,
-            selectedValue: null,
+
+            sellUserID: null,
             sellNum:null,
             sellPrice:null,
         }
@@ -51,29 +52,28 @@ export default class MaterialDialog extends React.Component {
     handleClose = () => {
         this.setState({
             sellDialogOpen: false,
-            selectedValue: null,
+
+            sellUserID: null,
             sellNum:null,
             sellPrice:null,
         });
     };
 
     handleSubmitSell =()=>{
-        this.props.sellMaterial(this.props.id,this.props.material,this.state.sellNum,this.state.sellPrice).then(
+        this.props.produce(this.props.id,this.props.material.type,this.state.sellNum,this.state.sellPrice,this.state.sellUserID).then(
 
         ).catch((err)=>{
 
         });
         this.handleClose();
     };
-    handleChange = (event, index, value) => {
-        this.setState({selectedValue:value});
-    };
-    handleSellNum = (event) =>{
-        this.setState({ sellNum: event.target.value })
-    };
-    handleSellPrice = (event) =>{
-        this.setState({ sellPrice: event.target.value })
-    };
+
+    handleChange = (event, index, value) => {this.setState({sellUserID:value});};
+
+    handleSellNum = (event) =>{this.setState({ sellNum: event.target.value })};
+
+    handleSellPrice = (event) =>{this.setState({ sellPrice: event.target.value })};
+
     sellMachine = ()=>{this.setState({sellDialogOpen:true});};
 
     sellMaterial = ()=>{this.setState({sellDialogOpen:true});};
@@ -89,7 +89,7 @@ export default class MaterialDialog extends React.Component {
                 label="确认"
                 primary={true}
                 keyboardFocused={true}
-                disabled={!((this.state.selectedValue) && (this.state.sellNum) && (this.state.sellPrice))}
+                disabled={!((this.state.sellUserID) && (this.state.sellNum) && (this.state.sellPrice))}
                 onClick={this.handleSubmitSell}
             />,
         ];
@@ -107,7 +107,7 @@ export default class MaterialDialog extends React.Component {
                         <tr><td>出售队伍ID：</td><td>
                             <SelectField
                                 style={styles.selectTeam}
-                                value={this.state.selectedValue}
+                                value={this.state.sellUserID}
                                 onChange={this.handleChange}
                                 maxHeight={200}>
                                 {items}

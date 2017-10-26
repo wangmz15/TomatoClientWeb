@@ -2,27 +2,15 @@ import React, { Component} from 'react'
 import { connect } from 'react-redux'
 import {loginCustomer} from '../Actions'
 import {Redirect} from 'react-router-dom'
-// import { isActive } from '../Reducers'
 import Login from '../Components/Login'
 class LoginContainer extends Component {
-
-    // static propTypes = {
-    //     username: PropTypes.string,
-    //     isAuthenticated: PropTypes.bool,
-    // };
-
     render() {
         const { loginCustomer,isAuthenticated, username } = this.props;
         if (isAuthenticated) {
-            //url = this.props.loginCustomer+"/login"
-            // console.log("if " + isAuthenticated);
-            // this.props.history.replace('/TeamMessage')
-            // this.props.username = '';
             console.log("login! username = " + username)
             return (
                 <Redirect to= "/TeamMessage" />);
         }
-        // return(<div>err</div>);
         else {
             console.log("not login!");
             return (

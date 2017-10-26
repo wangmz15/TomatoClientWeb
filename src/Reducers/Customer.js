@@ -1,6 +1,6 @@
 import {
     LOGIN_CUSTOMER,
-    GET_INFORMATION, UPDATE_INFORMATION,
+    GET_INFORMATION, UPDATE_INFORMATION,CHANGE_AVATAR
 } from '../Constants/ActionTypes'
 
 
@@ -8,7 +8,7 @@ import {
 const initialState = {
     username: '',
     id: 3,
-    avatar: '',
+    avatar: null,
     isAuthenticated: false,
     rank: -1,
     gameStatus:'-1',
@@ -41,9 +41,26 @@ const customer = (state = initialState, action) => {
             };
         }
         case `${UPDATE_INFORMATION}_ACK`: {
+            console.log({
+                ...state,
+                // ...action.payload,
+                // action.payload,
+            });
             return {
                 ...state,
                 ...action.payload,
+                // avatar:action.payload.avatar,
+            };
+        }
+        case `${CHANGE_AVATAR}_ACK`: {
+            // console.log({
+            //     ...state,
+            //     // ...action.payload,
+            //     // action.payload,
+            // });
+            return {
+                ...state,
+                avatar:action.payload,
             };
         }
         default:

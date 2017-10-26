@@ -10,4 +10,4 @@ export const UPDATE_PROPERTY_LIST = 'UPDATE_PROPERTY_LIST';
 export const SELL_MATERIAL = 'SELL_MATERIAL';
 export const SELL_MACHINE = 'SELL_MACHINE';
 export const PRODUCE = 'PRODUCE';
-
+export const CHANGE_AVATAR = "CHANGE_AVATAR"

@@ -51,23 +51,28 @@ export default class MachineDialog extends React.Component {
             sellDialogOpen: false,
             produceDialogOpen:false,
 
-            selectedValue: null,
             sellNum:null,
             sellPrice:null,
+            sellUserID:null,
+
+            produceTime:null,
         }
     }
     handleClose = () => {
         this.setState({
             sellDialogOpen: false,
             produceDialogOpen:false,
-            selectedValue: null,
+
             sellNum:null,
             sellPrice:null,
+            sellUserID:null,
+
+            produceTime:null,
         });
     };
 
     handleSubmitSell =()=>{
-        this.props.sellMachine(this.props.id, this.props.machine.id).then(
+        this.props.sellMachine(this.props.id, this.props.machine.id,this.state.sellNum,this.state.sellPrice, this.state.sellUserID).then(
 
         ).catch((err)=>{
 
@@ -75,18 +80,20 @@ export default class MachineDialog extends React.Component {
         this.handleClose();
     };
     handleSubmitProduce = () =>{
-        this.props.produce(this.props.id, this.props.machine.id, this.props.material,this.state.sellNum,this.state.sellPrice).then(
+        this.props.produce(this.props.id,this.props.machine.id,this.state.produceTime).then(
 
         ).catch((err)=>{
 
-        })
+        });
         this.handleClose();
     };
-    handleChange = (event, index, value) => {this.setState({selectedValue:value});};
+    handleChange = (event, index, value) => {this.setState({sellUserID:value});};
     
     handleSellNum = (event) =>{this.setState({ sellNum: event.target.value })};
     
     handleSellPrice = (event) =>{this.setState({ sellPrice: event.target.value })};
+
+    handleProduceTime = (event) =>{this.setState({ produceTime: event.target.value });};
     
     sellMachine = ()=>{this.setState({sellDialogOpen:true});};
     produce = ()=>{this.setState({produceDialogOpen:true});};
@@ -101,7 +108,7 @@ export default class MachineDialog extends React.Component {
                 label="确认"
                 primary={true}
                 keyboardFocused={true}
-                disabled={!((this.state.selectedValue) && (this.state.sellNum) && (this.state.sellPrice))}
+                disabled={!((this.state.sellUserID) && (this.state.sellNum) && (this.state.sellPrice))}
                 onClick={this.handleSubmitSell}
             />,
         ];
@@ -115,6 +122,7 @@ export default class MachineDialog extends React.Component {
                 label="确认"
                 primary={true}
                 keyboardFocused={true}
+                disabled={!(this.state.produceTime)}
                 onClick={this.handleSubmitProduce}
             />,
         ];
@@ -137,7 +145,7 @@ export default class MachineDialog extends React.Component {
                         <tr><td>出售队伍ID：</td><td>
                             <SelectField
                             style={styles.selectTeam}
-                            value={this.state.selectedValue}
+                            value={this.state.sellUserID}
                             onChange={this.handleChange}
                             maxHeight={200}>
                                 {items}
@@ -161,7 +169,14 @@ export default class MachineDialog extends React.Component {
                     onRequestClose={this.handleClose}
                     style={styles.table}
                 >
-                    机器{this.props.machine.id}将耗费XX木材，XX砖块，XX水泥，并消耗一次生产机会，是否确认开始
+                    机器:{this.props.machine.id} 将开始生产:{this.props.machine.type}<br/>
+                    <table style={styles.table}>
+                        <tr><td>生产次数：</td><td>
+                            <TextField hintText={"1"}
+                                       style={styles.input}
+                                       value={this.state.produceTime}
+                                       onChange={this.handleProduceTime}/>次</td></tr>
+                    </table>
                 </Dialog>
 
             </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
 import Extension from 'material-ui/svg-icons/action/extension';
 import Store from 'material-ui/svg-icons/action/store';
-// import Nature from 'material-ui/svg-icons/image/nature'
+import Nature from 'material-ui/svg-icons/image/nature'
 import SwipeableViews from 'react-swipeable-views';
 import {Avatar, BottomNavigation, BottomNavigationItem, Paper} from "material-ui";
 // import Dialog from 'material-ui/Dialog';
@@ -13,14 +13,16 @@ import MaterialDialog from "./MaterialDialog";
 // import actions from "redux-form/es/actions";
 // const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
 // const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
+import wood from "material-ui/svg-icons/image/nature";
+import brick from "material-ui/svg-icons/image/view-compact";
 
 const styles = {
     table:{
         fontSize: 15,
         textAlign: 'left',
-        width:"45%",
+        width:"50%",
         // border:'1px solid blue',
-        marginLeft:"30%",
+        marginLeft:"25%",
         // border:0,
     },
     statusTable:{
@@ -92,15 +94,16 @@ export default class PropertyForm extends React.Component{
     }
 
     renderAvatar(type){
+        console.log("!!! "+wood);
         switch(type){
             case 'wood':
-                return 'material-ui/svg-icons/image/nature';
+                return (<wood/>);
             case 'brick':
-                return "material-ui/svg-icons/image/view-compact";
+                return (<brick/>);
             case 'cement':
-                return "";
+                return (<wood/>);
             default:
-                return "";
+                return (<wood/>);
         }
     }
 
@@ -110,13 +113,13 @@ export default class PropertyForm extends React.Component{
                 <Paper style={styles.ContainerPaper}>
                     <Paper style={styles.CirclePaper} circle={true} zDepth={2}>
                         <Avatar
-                            src={this.renderAvatar(item.type)}
+                            icon={<wood />}
                             style={styles.avatar}
                         />
                     </Paper><br/>
                     <table style={styles.table}>
                         <tr><td>种类：</td> <td>{item.type}</td></tr>
-                        <tr><td>价格：</td> <td>{item.price}</td></tr>
+                        <tr><td>生产价格：</td> <td>{item.price}</td></tr>
                         <tr><td>数量：</td> <td>{item.number}</td></tr>
                     </table>
 
@@ -144,7 +147,7 @@ export default class PropertyForm extends React.Component{
                     </Paper><br/>
                     <table style={styles.table}>
                         <tr><td>机器ID:</td> <td>{item.id}</td></tr>
-                        <tr><td>种类: </td> <td>{item.type}</td></tr>
+                        <tr><td>生产种类: </td> <td>{item.type}</td></tr>
                         <tr><td>剩余次数: </td> <td>{item.left}</td></tr>
                     </table>
                     <br/>

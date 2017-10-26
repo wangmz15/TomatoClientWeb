@@ -6,9 +6,14 @@ import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import Divider from 'material-ui/Divider';
-import {Paper} from "material-ui";
+import {Avatar, Dialog, FlatButton, makeSelectable, Paper, Subheader, Table, TableBody, TableRow} from "material-ui";
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
 import LogoutButton from "./LogoutButton";
+import img1 from "../Resources/1.jpg";
+import img2 from "../Resources/2.jpg";
+import img3 from "../Resources/3.jpg";
+
+// import SelectAvatar from "./SelectAvatar";
 
 const styles = {
     largeAvatarIcon: {
@@ -33,27 +38,100 @@ const styles = {
 
 }
 export default class TeamMessage extends React.Component{
-    constructor(props){
-        super(props)
-        this.state ={
-            username:'',
-            id: '',
-            wealth:'',
+    constructor(props) {
+        super(props);
+        this.state = {
+            avatarDialogOpen:false,
+            avatar:"",
+            // selectedIndex:null,
+            selected:[1],
         }
     }
 
+    selected =  (index) => {
+        return this.state.selected.indexOf(index) !== -1;
+    };
     componentWillMount() {
         this.props.getInformation(this.props.id).then(() => {
-            // console.log("getInfo之后 wealth = " + this.props.wealth);
         });
     }
 
 
-    changeAvatar = () => {
-        console.log("change Avatar")
+    changeAvatar = () => {this.setState({avatarDialogOpen:true});};
+
+    handleRequestChange = (event,value) => {
+        this.setState({
+            selectedIndex: value,
+            avatar:"../Resources/"+value+".jpg"
+        });
+        console.log(value);
+        this.props.updateInformation(this.props.username,this.props.id, this.state.avatar,this.props.rank,this.props.gameStatus);
+
+        // this.handleClose();
     };
 
+    handleClose = () => {
+        this.setState({
+            avatarDialogOpen:false,
+            selectedIndex:null,
+        });
+    };
+
+    handleRowSelection = (selectedRows) => {
+        this.setState({
+            selected: selectedRows,
+        });
+    };
+    handleSubmitChangeAvatar = ()=>{
+        this.props.changeAvatar("899");
+        this.props.updateInformation(this.props.username,this.props.id,this.state.avatar,this.props.rank,this.props.gameStatus);
+        this.handleClose();
+    };
     render(){
+        const ChangeAvatarActions = [
+            <FlatButton
+                label="取消"
+                primary={true}
+                onClick={this.handleClose}
+            />,
+            <FlatButton
+                label="确认"
+                primary={true}
+                onClick={this.handleSubmitChangeAvatar}
+            />,
+        ];
+
+
+        // let SelectableList = makeSelectable(List);
+        //
+        // function wrapState(ComposedComponent) {
+        //     return class SelectableList extends React.Component {
+        //         constructor(props){
+        //             super(props);
+        //         }
+        //         componentWillMount() {this.setState({selectedIndex: this.props.defaultValue,});}
+        //         handleRequestChange = (event, index) => {
+        //             this.setState({
+        //                 selectedIndex: index,
+        //             });
+        //             let ans = "/Resources/" + this.state.selectedIndex + ".jpg";
+        //             console.log("??" + this.props.gameStatus);
+        //             // this.props.updateInformation(this.props.username,this.props.id,ans,this.props.rank,this.props.gameStatus);
+        //
+        //         };
+        //         render() {
+        //             return (
+        //                 <ComposedComponent
+        //                     value={this.state.selectedIndex}
+        //                     onChange={this.handleRequestChange}
+        //                 >
+        //                     {this.props.children}
+        //                 </ComposedComponent>
+        //             );
+        //         }
+        //     };
+        // }
+        // SelectableList = wrapState(SelectableList);
 
         return(
             <div>
@@ -64,14 +142,40 @@ export default class TeamMessage extends React.Component{
                     style={styles.largeDIV}>
                     <AccountCircle onClick = {this.changeAvatar}/>
                 </IconButton>
+
+                <Dialog title="更改头像"
+                        actions={ChangeAvatarActions}
+                        open={this.state.avatarDialogOpen}
+                        onRequestClose={this.handleClose}
+                >
+                    <Table
+                        displaySelectAll={false}
+                        onRowSelection={this.handleRowSelection}
+                    >
+                        <TableBody displayRowCheckbox={false}>
+                            <Subheader>可选头像</Subheader>
+                            <TableRow selected={this.selected(1)}><ListItem
+                                value = {1}
+                                primaryText="你是魔鬼吗"
+                                leftAvatar={<Avatar src={img1} />}
+                            /></TableRow>
+                            <TableRow selected={this.selected(2)}><ListItem
+                                value = {2}
+                                primaryText="你是魔鬼吗2"
+                                leftAvatar={<Avatar src={img2} />}
+                            /></TableRow>
+                            <TableRow selected={this.selected(3)}><ListItem
+                                value = {3}
+                                primaryText="苗子"
+                                leftAvatar={<Avatar src={img3} />}
+                            /></TableRow>
+                        </TableBody>
+
+                    </Table>
+                    {/*</SelectableList>*/}
+                </Dialog>
+
                 <br/><br/>
-                    {/*<InfoList*/}
-                        {/*username = {this.props.username}*/}
-                        {/*// avatar = {this.props.avatar}*/}
-                        {/*id = {this.props.id}*/}
-                        {/*rank = {this.props.rank}*/}
-                        {/*gameStatus = {this.props.gameStatus}*/}
-                    {/*/>*/}
                 <Paper style={ styles.ContainerStyle }>
                     <List>
                         <ListItem primaryText="队伍名称" secondaryText={this.props.username} leftIcon={<ContentInbox />} />

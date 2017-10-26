@@ -3,8 +3,26 @@ import request from "superagent";
 // import {dispatch} from "redux/es/createStore";
 const API = 'http://localhost:8080/api/client';
 
+
+export const changeAvatar = (id,newAvatar) => (dispatch) =>{
+    let dispatchObj = {
+        type:types.CHANGE_AVATAR,
+        payload:{
+            promise:
+                request
+                    .put(`${API}/info/avatar/id=${id}`)
+                    .set('Content-Type', 'application/json')
+                    .accept('application/json')
+                    .then(response => response.body)
+        },
+    };
+
+    return dispatch(dispatchObj);
+};
+
+
 export const getHistory = (id) =>(dispatch)=> { //通过测试
-    console.log("调用 getHistory")
+    console.log("调用 getHistory");
     let dispatchObj = {
         type:types.GET_HISTORY,
         payload:{
@@ -21,7 +39,7 @@ export const getHistory = (id) =>(dispatch)=> { //通过测试
 };
 
 
-export const produce = (userid, id,number,price) =>(dispatch) => { //测试通过
+export const produce = (userid, id, times) =>(dispatch) => { //测试通过
     console.log("调用 produce");
     let dispatchObj = {
         type:types.PRODUCE,
@@ -33,8 +51,7 @@ export const produce = (userid, id,number,price) =>(dispatch) => { //测试通�
                     .accept('application/json')
                     .send({
                         "id": id,
-                        "number":number,
-                        "price":price,
+                        "times":times
                     })
                     .then(response => response.body)
         },
@@ -43,20 +60,21 @@ export const produce = (userid, id,number,price) =>(dispatch) => { //测试通�
 }
 
 
-export const sellMaterial = (userid,material,number,price) =>(dispatch) => { //测试通过
+export const sellMaterial = (userid,type,number,price,recieverID) =>(dispatch) => { //测试通过
     console.log("调用 sellMaterial");
     let dispatchObj = {
         type:types.SELL_MATERIAL,
         payload:{
             promise:
                 request
-                    .post(`${API}/property/sellmaterial/id=${userid}`)
+                    .post(`${API}/property/sellMaterial/id=${userid}`)
                     .set('Content-Type', 'application/json')
                     .accept('application/json')
                     .send({
-                        "material": material,
+                        "type": type,
                         "number":number,
                         "price":price,
+                        "recieverID":recieverID,
                     })
                     .then(response => response.body)
         },
@@ -66,18 +84,21 @@ export const sellMaterial = (userid,material,number,price) =>(dispatch) => { //�
 
 
 
-export const sellMachine = (userid, id) =>(dispatch) => { //测试通过
+export const sellMachine = (userid, id,number,price,recieverID) =>(dispatch) => { //测试通过
     console.log("调用 sellMachine")
     let dispatchObj = {
         type:types.SELL_MACHINE,
         payload:{
             promise:
                 request
-                    .post(`${API}/property/sellmachine/id=${userid}`)
+                    .post(`${API}/property/sellMachine/id=${userid}`)
                     .set('Content-Type', 'application/json')
                     .accept('application/json')
                     .send({
                         "id":id,
+                        "number":number,
+                        "price":price,
+                        "recieverID":recieverID,
                     })
                     .then(response => response.body)
         },
@@ -102,7 +123,8 @@ export const getPropertyList = (id) =>(dispatch)=> { //通过测试
     return dispatch(dispatchObj);
 };
 
-export const updateInformation = (id) => (dispatch) => {
+export const updateInformation = (username,id,avatar,rank,gameStatus) => (dispatch) => {
+    // console.log("avatar"+avatar);
     let dispatchObj = {
         type: types.UPDATE_INFORMATION,
         payload: {
@@ -112,32 +134,21 @@ export const updateInformation = (id) => (dispatch) => {
                     .set('Content-Type', 'application/json')
                     .accept('application/json')
                     .send({
+                        "username": username,
+                        "id": id,
+                        "avatar": avatar,
+                        "rank": 1,
+                        "gameStatus":gameStatus,
                     })
                     .then(response => response.body)
         },
     };
-    return dispatch(dispatchObj);
-};
-
-export const updatePropertyList = (id) => (dispatch) => {
-    let dispatchObj = {
-        type: types.UPDATE_PROPERTY_LIST,
-        payload: {
-            promise:
-                request
-                    .put(`${API}/property/id=${id}`)
-                    .set('Content-Type', 'application/json')
-                    .accept('application/json')
-                    .send({
-                    })
-                    .then(response => response.body)
-        },
-    };
+    // console.log(dispatchObj)
     return dispatch(dispatchObj);
 };
 
 
-export const getInformation = (id) =>(dispatch)=> {//已经测试通过
+export const getInformation = (id) =>(dispatch)=> {//测试通过
     console.log("调用 getInformation");
     let dispatchObj = {
         type:types.GET_INFORMATION,
@@ -150,7 +161,6 @@ export const getInformation = (id) =>(dispatch)=> {//已经测试通过
                     .then(response => response.body)
         },
     };
-    console.log(dispatchObj)
     return dispatch(dispatchObj);
 };
 
