@@ -10,7 +10,7 @@ const styles = {
 
 export default class MyAppBarAndDrawer extends React.Component{
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             text:props.text,
             navigate:'false'
@@ -41,7 +41,7 @@ export default class MyAppBarAndDrawer extends React.Component{
                     <MenuItem containerElement={<Link to="/Property" />}>资产</MenuItem>
                     <MenuItem containerElement={<Link to="/Statistics" />}>统计</MenuItem>
                     <MenuItem containerElement={<Link to="/Help" />}>帮助</MenuItem>
-                    <MenuItem containerElement={<Link to="/" />}>登出</MenuItem>
+                    {/*<MenuItem containerElement={<Link to="/" />}>登出</MenuItem>*/}
                 </Drawer>
             </div>
 

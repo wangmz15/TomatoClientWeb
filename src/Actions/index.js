@@ -1,8 +1,31 @@
 import * as types from '../Constants/ActionTypes'
 import request from "superagent";
 // import {dispatch} from "redux/es/createStore";
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 const API = 'http://localhost:8080/api/client';
 
+
+
+export const connectClient = (stompClient) => (dispatch) => {
+    console.log("connectClient");
+
+
+    stompClient = Stomp.over(new SockJS('http://127.0.0.1:8090/hhh'));
+    console.log(stompClient);
+    stompClient.connect({}, function (frame) {
+        stompClient.subscribe('/topic/greetings', function (greeting) {
+            console.log(JSON.parse(greeting.body).content);
+        });
+    });
+    let dispatchObj = {
+        type:types.CONNECT_CLIENT,
+        payload:{
+            stompClient:stompClient
+        },
+    };
+    return dispatch(dispatchObj);
+};
 
 export const changeAvatar = (id,newAvatar) => (dispatch) =>{
     let dispatchObj = {
@@ -22,7 +45,7 @@ export const changeAvatar = (id,newAvatar) => (dispatch) =>{
 
 
 export const getHistoryList = (id) =>(dispatch)=> { //测试
-    console.log("调用 getHistory id = "+ id);
+    // console.log("调用 getHistory id = "+ id);
     let dispatchObj = {
         type:types.GET_HISTORY_LIST,
         payload:{
@@ -40,7 +63,7 @@ export const getHistoryList = (id) =>(dispatch)=> { //测试
 
 
 export const produce = (userid, id, times) =>(dispatch) => { //测试通过
-    console.log("调用 produce");
+    // console.log("调用 produce");
     let dispatchObj = {
         type:types.PRODUCE,
         payload:{
@@ -61,7 +84,7 @@ export const produce = (userid, id, times) =>(dispatch) => { //测试通过
 
 
 export const sellMaterial = (userid,type,number,price,recieverID) =>(dispatch) => { //测试通过
-    console.log("调用 sellMaterial");
+    // console.log("调用 sellMaterial");
     let dispatchObj = {
         type:types.SELL_MATERIAL,
         payload:{
@@ -85,7 +108,7 @@ export const sellMaterial = (userid,type,number,price,recieverID) =>(dispatch) =
 
 
 export const sellMachine = (userid, id,number,price,recieverID) =>(dispatch) => { //测试通过
-    console.log("调用 sellMachine")
+    // console.log("调用 sellMachine")
     let dispatchObj = {
         type:types.SELL_MACHINE,
         payload:{
@@ -106,7 +129,7 @@ export const sellMachine = (userid, id,number,price,recieverID) =>(dispatch) => 
 }
 
 export const getPropertyList = (id) =>(dispatch)=> { //通过测试
-    console.log("调用 getPropertyList")
+    // console.log("调用 getPropertyList")
     let dispatchObj = {
         type:types.GET_PROPERTY_LIST,
         payload:{
@@ -148,7 +171,7 @@ export const updateInformation = (username,id,avatar,rank,gameStatus) => (dispat
 
 
 export const getInformation = (id) =>(dispatch)=> {//测试通过
-    console.log("调用 getInformation");
+    // console.log("调用 getInformation");
     let dispatchObj = {
         type:types.GET_INFORMATION,
         payload:{
@@ -164,7 +187,7 @@ export const getInformation = (id) =>(dispatch)=> {//测试通过
 };
 
 export const loginCustomer = (username, password) => (dispatch) => {//已经测试通过
-    console.log("调用 loginCustomer");
+    // console.log("调用 loginCustomer");
     let dispatchObj = {
         type: types.LOGIN_CUSTOMER,
         payload: {

@@ -104,7 +104,7 @@ export default class MachineDialog extends React.Component {
                 label="确认"
                 primary={true}
                 keyboardFocused={true}
-                disabled={!((this.state.sellUserID) && (this.state.sellNum) && (this.state.sellPrice))}
+                disabled={!((this.state.sellUserID) && (this.state.sellPrice))}
                 onClick={this.handleSubmitSell}
             />,
         ];

@@ -3,12 +3,17 @@ import History from 'material-ui/svg-icons/action/history';
 import Favorite from 'material-ui/svg-icons/action/favorite-border';
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
 import LogoutButton from "./LogoutButton";
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 import SwipeableViews from 'react-swipeable-views';
 import {
     BottomNavigation, BottomNavigationItem, Paper, Subheader, Table, TableBody, TableHeader, TableHeaderColumn,
     TableRow,
     TableRowColumn
 } from "material-ui";
+
+var socket = new SockJS('http://127.0.0.1:8090/hhh');
+let stompClient = Stomp.over(socket);
 
 const styles = {
     headline: {

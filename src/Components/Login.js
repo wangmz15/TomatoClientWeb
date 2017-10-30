@@ -64,11 +64,11 @@ class Login extends React.Component{
 
     handleUsername = (event) => {
         this.setState({ username: event.target.value })
-    }
+    };
 
     handlePassword = (event) => {
         this.setState({ password: event.target.value })
-    }
+    };
 
     handleLogin = () => {
         if (!this.state.username) {
@@ -84,6 +84,7 @@ class Login extends React.Component{
         this.props.loginCustomer(this.state.username, this.state.password).then(
             response => {
                 setJwtToken(response.value.token);
+                this.props.connectClient(this.props.stompClient);
             }).catch ((err) => {
             this.setState({
                 username: '',

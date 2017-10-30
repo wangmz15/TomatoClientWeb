@@ -1,10 +1,11 @@
 import React from 'react';
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
+import LogoutButton from "./LogoutButton";
 import Extension from 'material-ui/svg-icons/action/extension';
 import Store from 'material-ui/svg-icons/action/store';
 import Nature from 'material-ui/svg-icons/image/nature'
 import SwipeableViews from 'react-swipeable-views';
-import {Avatar, BottomNavigation, BottomNavigationItem, Paper} from "material-ui";
+import {Avatar, BottomNavigation, BottomNavigationItem, FlatButton, Paper} from "material-ui";
 // import Dialog from 'material-ui/Dialog';
 // import FlatButton from 'material-ui/FlatButton';
 // import DatePicker from 'material-ui/DatePicker';
@@ -15,6 +16,12 @@ import MaterialDialog from "./MaterialDialog";
 // const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
 import wood from "material-ui/svg-icons/image/nature";
 import brick from "material-ui/svg-icons/image/view-compact";
+import SellRequestDialog from "./SellRequestDialog";
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
+
+
+
 
 const styles = {
     table:{
@@ -87,14 +94,20 @@ export default class PropertyForm extends React.Component{
         };
     }
 
+
     componentWillMount() {
         this.props.getInformation(this.props.id).then(()=>{});
         this.props.getPropertyList(this.props.id).then(() => {
         });
-    }
+        console.log(this.props.stompClient);
 
+        // var socket  = new SockJS("")
+        this.props.connectClient(this.props.stompClient);
+
+    }
     renderAvatar(type){
         console.log("!!! "+wood);
+
         switch(type){
             case 'wood':
                 return (<wood/>);
@@ -188,9 +201,12 @@ export default class PropertyForm extends React.Component{
     };
 
 
+
+
     render(){
         return(
             <div>
+                <SellRequestDialog sellRequestDialogOpen = {this.props.sellRequestDialogOpen}/>
                 <MyAppBarAndDrawer text = {'资产'} />
                 <Paper zDepth={1}>
                     <BottomNavigation selectedIndex={this.state.selectedIndex}>
@@ -205,6 +221,7 @@ export default class PropertyForm extends React.Component{
                             onClick={() => this.select(1)}
                         />
                     </BottomNavigation>
+                    <FlatButton label={"aaaa"} onClick={this.test}/>
                 </Paper>
                 {this.renderStatus()}
 
@@ -217,7 +234,13 @@ export default class PropertyForm extends React.Component{
                         {this.renderMaterialList()}
                     </div>
                 </SwipeableViews><br/><br/>
+                <LogoutButton />
             </div>
         )
+    }
+
+    test = () =>{
+
+       this.props.stompClient.send("/api/client/property/id=3", {}, JSON.stringify({'name': 'name'}))
     }
 }
