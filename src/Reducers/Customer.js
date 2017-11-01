@@ -13,22 +13,16 @@ const initialState = {
     isAuthenticated: false,
     rank: -1,
     gameStatus:'-1',
-    stompClient:{},
+    replyClient:{},
+    requestClient:{},
+
+    replyDialogOpen:false,
+    sellRequestDialogOpen:false,
 };
 
 const customer = (state = initialState, action) => {
     switch (action.type) {
         case `${CONNECT_CLIENT}`: {
-            // console.log("??" + this.state.stompClient);
-            //
-            // this.state.stompClient = Stomp.over(new SockJS('http://127.0.0.1:8090/hhh'));
-            // // console.log("??" + this.state.stompClient);
-            // this.state.stompClient.connect({}, function (frame) {
-            //     this.state.stompClient.subscribe('/topic/greetings', function (greeting) {
-            //         console.log("!!!!!");
-            //         console.log(JSON.parse(greeting.body).content);
-            //     });
-            // });
             return {
                 ...state,
                 ...action.payload,

@@ -7,7 +7,7 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 
 var socket = new SockJS('http://127.0.0.1:8090/hhh');
-let stompClient = Stomp.over(socket);
+let replyClient = Stomp.over(socket);
 
 
 
@@ -29,7 +29,7 @@ class StatisticsContainer extends Component {
 
                 getHistoryList = {getHistoryList}
 
-                // stompClient = {stompClient}
+                // replyClient = {replyClient}
             />
         );
     }

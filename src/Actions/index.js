@@ -5,25 +5,70 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 const API = 'http://localhost:8080/api/client';
 
+export const connectRequestClient = (requestClient) => (dispatch) => {
+    console.log("connectRequestClient");
 
+    requestClient = Stomp.over(new SockJS('http://127.0.0.1:8090/ggg'));
 
-export const connectClient = (stompClient) => (dispatch) => {
-    console.log("connectClient");
+    requestClient.connect({}, function (frame) {
+        requestClient.subscribe("/api/client/property/sellMachine/reply/id=3", function (reply) {
+                if(JSON.parse(reply.body).isAgree){
+                    console.log("agree");
+                    console.log(reply.body);
+                    let dispatchObj1 = {
+                        type:types.CONNECT_CLIENT,
+                        payload:{
+                            requestClient:requestClient,
+                            requestDialogOpen:true,
+                        },
+                    };
+                    console.log(dispatchObj1);
+                    return dispatch(dispatchObj1);
+                }
+                else{
+                    console.log("disagree")
+                }
 
+        }
+        );
+    });
+    let dispatchObj = {
+        type:types.CONNECT_CLIENT,
+        payload:{
+            requestClient:requestClient
+        },
+    };
+    console.log(dispatchObj);
+    return dispatch(dispatchObj);
+};
 
-    stompClient = Stomp.over(new SockJS('http://127.0.0.1:8090/hhh'));
-    console.log(stompClient);
-    stompClient.connect({}, function (frame) {
-        stompClient.subscribe('/topic/greetings', function (greeting) {
-            console.log(JSON.parse(greeting.body).content);
+export const connectReplyClient = (replyClient) => (dispatch) => {
+    console.log("connectReplyClient");
+    replyClient = Stomp.over(new SockJS('http://127.0.0.1:8090/reply'));
+    replyClient.connect({}, function (frame) {
+        replyClient.subscribe("/api/client/sellReply/id=3", function (request) {
+            console.log(request.body);
+            let dispatchObj = {
+                type:types.CONNECT_CLIENT,
+                payload:{
+                    replyClient:replyClient,
+                    replyDialogOpen:true,
+                },
+            };
+            console.log("监听到");
+            console.log(dispatchObj);
+            return dispatch(dispatchObj);
         });
     });
     let dispatchObj = {
         type:types.CONNECT_CLIENT,
         payload:{
-            stompClient:stompClient
+            replyClient:replyClient,
+            replyDialogOpen:false,
         },
     };
+    console.log("没监听到");
+    console.log(dispatchObj);
     return dispatch(dispatchObj);
 };
 

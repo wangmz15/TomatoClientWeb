@@ -84,7 +84,8 @@ class Login extends React.Component{
         this.props.loginCustomer(this.state.username, this.state.password).then(
             response => {
                 setJwtToken(response.value.token);
-                this.props.connectClient(this.props.stompClient);
+                this.props.connectReplyClient(this.props.replyClient);
+                this.props.connectRequestClient(this.props.requestClient);
             }).catch ((err) => {
             this.setState({
                 username: '',

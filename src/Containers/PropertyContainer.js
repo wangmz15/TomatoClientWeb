@@ -3,14 +3,15 @@ import { connect } from 'react-redux'
 import PropertyForm from "../Components/PropertyForm";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import {getInformation, getPropertyList, produce, sellMachine, sellMaterial, connectClient} from "../Actions/index";
+import {getInformation, getPropertyList, produce, sellMachine, sellMaterial, connectReplyClient,connectRequestClient} from "../Actions/index";
 
 class PropertyContainer extends Component {
     render() {
-        // console.log("now RENDER let's see if the socket is connected? :" + stompClient.connected)
+        // console.log("now RENDER let's see if the socket is connected? :" + replyClient.connected)
         const {getPropertyList, sellMaterial,sellMachine,produce,getInformation,
             gameStatus, machineList, materialList,id,wealth,
-               stompClient, connectClient} = this.props;
+               replyClient, connectReplyClient,connectRequestClient,
+            sellRequestDialogOpen,replyDialogOpen,requestClient} = this.props;
         return(
             <PropertyForm
                 getPropertyList = {getPropertyList}
@@ -25,8 +26,12 @@ class PropertyContainer extends Component {
                 materialList = {materialList}
                 wealth = {wealth}
 
-                stompClient = {stompClient}
-                connectClient = {connectClient}
+                requestClient = {requestClient}
+                replyClient = {replyClient}
+                connectReplyClient = {connectReplyClient}
+                connectRequestClient = {connectRequestClient}
+                sellRequestDialogOpen = {sellRequestDialogOpen}
+                replyDialogOpen = {replyDialogOpen}
             />
         );
     }
@@ -39,10 +44,13 @@ const mapStateToProps = (state) => ({//定义怎么绑定
     wealth:state.propertyList.wealth,
     id:state.customer.id,
 
-    stompClient:state.customer.stompClient,
+    requestClient:state.customer.requestClient,
+    replyClient:state.customer.replyClient,
+    sellRequestDialogOpen:state.customer.sellRequestDialogOpen,
+    replyDialogOpen:state.customer.replyDialogOpen,
 });
 
 export default connect(// 把需要绑定的东西放进去
     mapStateToProps,
-    {getPropertyList,sellMaterial,sellMachine,produce,getInformation,connectClient}
+    {getPropertyList,sellMaterial,sellMachine,produce,getInformation,connectReplyClient,connectRequestClient}
 )(PropertyContainer)

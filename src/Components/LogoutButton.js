@@ -1,7 +1,7 @@
 import React from 'react'
 import {RaisedButton} from "material-ui";
 import {removeJwtToken} from "../Actions/Storage";
-import {stompClient} from '../Actions/index'
+import {replyClient} from '../Actions/index'
 import connect from "react-redux/es/connect/connect";
 
 const styles = {
@@ -35,9 +35,9 @@ class LogoutButton extends React.Component{
     // }
 
     handleLogout = () => {
-        const { stompClient} = this.props;
+        const { replyClient} = this.props;
         removeJwtToken();
-        this.props.stompClient.disconnect();
+        this.props.replyClient.disconnect();
         // this.props.history.replace('/');
         window.location.href = '/';
     };
@@ -65,7 +65,7 @@ class LogoutButton extends React.Component{
 const mapStateToProps = (state) => ({//定义怎么绑定
     // isAuthenticated: state.customer.isAuthenticated,//前者是LoginContainer的是一个props, 它后来又传给了components／Login//后者是reducers/index.js里的一个函数///后者是Reducers／Customer.js的state里的成
     // username:state.customer.username,
-    stompClient:state.customer.stompClient,
+    replyClient:state.customer.replyClient,
 });
 
 export default connect(// 把需要绑定的东西放进去

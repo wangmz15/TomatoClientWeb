@@ -13,7 +13,7 @@ import {
 } from "material-ui";
 
 var socket = new SockJS('http://127.0.0.1:8090/hhh');
-let stompClient = Stomp.over(socket);
+let replyClient = Stomp.over(socket);
 
 const styles = {
     headline: {

@@ -19,6 +19,7 @@ import brick from "material-ui/svg-icons/image/view-compact";
 import SellRequestDialog from "./SellRequestDialog";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import ReplyDialog from "./ReplyDialog";
 
 
 
@@ -99,11 +100,9 @@ export default class PropertyForm extends React.Component{
         this.props.getInformation(this.props.id).then(()=>{});
         this.props.getPropertyList(this.props.id).then(() => {
         });
-        console.log(this.props.stompClient);
 
-        // var socket  = new SockJS("")
-        this.props.connectClient(this.props.stompClient);
-
+        this.props.connectReplyClient(this.props.replyClient);
+        this.props.connectRequestClient(this.props.requestClient);
     }
     renderAvatar(type){
         console.log("!!! "+wood);
@@ -141,6 +140,7 @@ export default class PropertyForm extends React.Component{
 
                         material = {item}
                         id = {this.props.id}
+
                     />
                 </Paper>
             );
@@ -206,7 +206,12 @@ export default class PropertyForm extends React.Component{
     render(){
         return(
             <div>
-                <SellRequestDialog sellRequestDialogOpen = {this.props.sellRequestDialogOpen}/>
+                <SellRequestDialog
+                    sellRequestDialogOpen = {this.props.sellRequestDialogOpen}
+                />
+                <ReplyDialog
+                    replyDialogOpen = {this.props.replyDialogOpen}
+                />
                 <MyAppBarAndDrawer text = {'资产'} />
                 <Paper zDepth={1}>
                     <BottomNavigation selectedIndex={this.state.selectedIndex}>
@@ -241,6 +246,9 @@ export default class PropertyForm extends React.Component{
 
     test = () =>{
 
-       this.props.stompClient.send("/api/client/property/id=3", {}, JSON.stringify({'name': 'name'}))
+       // this.props.replyClient.send("/api/client/property/sellMachine/id=3", {}, JSON.stringify({'name': 'name'}))
+        this.props.replyClient.send("/api/client/readyToReceive/id=3", {}, "i want to listen")
+
     }
+
 }
