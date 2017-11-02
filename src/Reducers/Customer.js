@@ -1,6 +1,6 @@
 import {
     LOGIN_CUSTOMER,
-    GET_INFORMATION, UPDATE_INFORMATION, CHANGE_AVATAR, CONNECT_CLIENT
+    GET_INFORMATION, UPDATE_INFORMATION, CHANGE_AVATAR, CONNECT_CLIENT, IS_ACCEPT_SELL
 } from '../Constants/ActionTypes'
 
 import * as Stomp from 'stompjs';
@@ -13,22 +13,10 @@ const initialState = {
     isAuthenticated: false,
     rank: -1,
     gameStatus:'-1',
-    replyClient:{},
-    requestClient:{},
-
-    replyDialogOpen:false,
-    sellRequestDialogOpen:false,
 };
 
 const customer = (state = initialState, action) => {
     switch (action.type) {
-        case `${CONNECT_CLIENT}`: {
-            return {
-                ...state,
-                ...action.payload,
-            };
-        }
-
         case `${LOGIN_CUSTOMER}_ACK`: {
             return {
                 ...state,

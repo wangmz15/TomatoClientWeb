@@ -61,10 +61,14 @@ export default class MaterialDialog extends React.Component {
 
     handleSubmitSell =()=>{
         // this.props.produce(this.props.id,this.props.material.type,this.state.sellNum,this.state.sellPrice,this.state.sellUserID).then(
-        this.props.sellMaterial(this.props.id,this.props.material.type,this.state.sellNum,this.state.sellPrice,this.state.sellUserID).then(
-        ).catch((err)=>{
+        // this.props.sellMaterial(this.props.id,this.props.material.type,this.state.sellNum,this.state.sellPrice,this.state.sellUserID).then(
+        // ).catch((err)=>{
+        //
+        // });
+        this.props.requestClient.send('/api/client/property/sell/id=3',{},
+            JSON.stringify({'buyer':this.state.sellUserID,'typeOrMachineID': this.props.material.type,
+                'price':this.state.sellPrice,'number':this.state.sellNum,'seller':this.props.id}));
 
-        });
         this.handleClose();
     };
 

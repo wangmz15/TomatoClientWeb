@@ -11,6 +11,8 @@ import {
     TableRow,
     TableRowColumn
 } from "material-ui";
+import RequestDialog from "./RequestDialog";
+import ReplyDialog from "./ReplyDialog";
 
 var socket = new SockJS('http://127.0.0.1:8090/hhh');
 let replyClient = Stomp.over(socket);
@@ -125,6 +127,8 @@ export default class Statistics extends React.Component{
         return(
             <div>
                 <MyAppBarAndDrawer text = {'统计'}/>
+
+                <RequestDialog/>
 
                 <Paper zDepth={2}>
                     <BottomNavigation selectedIndex={this.state.selectedIndex}>

@@ -20,6 +20,7 @@ import TeamMessageContainer from "./Containers/TeamMessageContainer";
 import StatisticsContainer from "./Containers/StatisticsContainer";
 import Help from "./Containers/Help";
 import PropertyContainer from "./Containers/PropertyContainer";
+import ReplyDialog from "./Components/ReplyDialog";
 
 
 const middleware = [

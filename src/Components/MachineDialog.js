@@ -70,11 +70,14 @@ export default class MachineDialog extends React.Component {
     };
 
     handleSubmitSell =()=>{
-        this.props.sellMachine(this.props.id, this.props.machine.id,this.state.sellPrice, this.state.sellUserID).then(
-
-        ).catch((err)=>{
-
-        });
+        // this.props.sellMachine(this.props.id, this.props.machine.id,this.state.sellPrice, this.state.sellUserID).then(
+        //
+        // ).catch((err)=>{
+        //
+        // });
+        this.props.requestClient.send('/api/client/property/sell/id=3',{},
+            JSON.stringify({'buyer':this.state.sellUserID,'typeOrMachineID': this.props.machine.id,
+                'price':this.state.sellPrice,'number':1,'seller':this.props.ID}));
         this.handleClose();
     };
     handleSubmitProduce = () =>{

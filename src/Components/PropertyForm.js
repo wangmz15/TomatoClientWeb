@@ -3,20 +3,13 @@ import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
 import LogoutButton from "./LogoutButton";
 import Extension from 'material-ui/svg-icons/action/extension';
 import Store from 'material-ui/svg-icons/action/store';
-import Nature from 'material-ui/svg-icons/image/nature'
 import SwipeableViews from 'react-swipeable-views';
 import {Avatar, BottomNavigation, BottomNavigationItem, FlatButton, Paper} from "material-ui";
-// import Dialog from 'material-ui/Dialog';
-// import FlatButton from 'material-ui/FlatButton';
-// import DatePicker from 'material-ui/DatePicker';
 import MachineDialog from "./MachineDialog";
 import MaterialDialog from "./MaterialDialog";
-// import actions from "redux-form/es/actions";
-// const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
-// const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
 import wood from "material-ui/svg-icons/image/nature";
 import brick from "material-ui/svg-icons/image/view-compact";
-import SellRequestDialog from "./SellRequestDialog";
+import RequestDialog from "./RequestDialog";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import ReplyDialog from "./ReplyDialog";
@@ -101,12 +94,10 @@ export default class PropertyForm extends React.Component{
         this.props.getPropertyList(this.props.id).then(() => {
         });
 
-        this.props.connectReplyClient(this.props.replyClient);
+        // this.props.connectReplyClient(this.props.replyClient);
         this.props.connectRequestClient(this.props.requestClient);
     }
     renderAvatar(type){
-        console.log("!!! "+wood);
-
         switch(type){
             case 'wood':
                 return (<wood/>);
@@ -141,6 +132,8 @@ export default class PropertyForm extends React.Component{
                         material = {item}
                         id = {this.props.id}
 
+                        requestClient={this.props.requestClient}
+
                     />
                 </Paper>
             );
@@ -171,6 +164,9 @@ export default class PropertyForm extends React.Component{
 
                             machine = {item}
                             id = {this.props.id}
+
+                            requestClient={this.props.requestClient}
+
                         />
                     </div>
                     {/*</ListItem>*/}
@@ -206,13 +202,9 @@ export default class PropertyForm extends React.Component{
     render(){
         return(
             <div>
-                <SellRequestDialog
-                    sellRequestDialogOpen = {this.props.sellRequestDialogOpen}
-                />
-                <ReplyDialog
-                    replyDialogOpen = {this.props.replyDialogOpen}
-                />
+
                 <MyAppBarAndDrawer text = {'资产'} />
+                <RequestDialog/>
                 <Paper zDepth={1}>
                     <BottomNavigation selectedIndex={this.state.selectedIndex}>
                         <BottomNavigationItem
@@ -226,7 +218,6 @@ export default class PropertyForm extends React.Component{
                             onClick={() => this.select(1)}
                         />
                     </BottomNavigation>
-                    <FlatButton label={"aaaa"} onClick={this.test}/>
                 </Paper>
                 {this.renderStatus()}
 
@@ -244,11 +235,6 @@ export default class PropertyForm extends React.Component{
         )
     }
 
-    test = () =>{
 
-       // this.props.replyClient.send("/api/client/property/sellMachine/id=3", {}, JSON.stringify({'name': 'name'}))
-        this.props.replyClient.send("/api/client/readyToReceive/id=3", {}, "i want to listen")
-
-    }
 
 }

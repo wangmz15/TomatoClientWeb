@@ -1,66 +1,73 @@
 import * as types from '../Constants/ActionTypes'
 import request from "superagent";
-// import {dispatch} from "redux/es/createStore";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 const API = 'http://localhost:8080/api/client';
 
-export const connectRequestClient = (requestClient) => (dispatch) => {
-    console.log("connectRequestClient");
-
-    requestClient = Stomp.over(new SockJS('http://127.0.0.1:8090/ggg'));
-
-    requestClient.connect({}, function (frame) {
-        requestClient.subscribe("/api/client/property/sellMachine/reply/id=3", function (reply) {
-                if(JSON.parse(reply.body).isAgree){
-                    console.log("agree");
-                    console.log(reply.body);
-                    let dispatchObj1 = {
-                        type:types.CONNECT_CLIENT,
-                        payload:{
-                            requestClient:requestClient,
-                            requestDialogOpen:true,
-                        },
-                    };
-                    console.log(dispatchObj1);
-                    return dispatch(dispatchObj1);
-                }
-                else{
-                    console.log("disagree")
-                }
-
-        }
-        );
-    });
+export const receiveReply = () => (dispatch) => {
+    console.log("receiveReply");
     let dispatchObj = {
-        type:types.CONNECT_CLIENT,
+        type:types.RECEIVE_REPLY,
         payload:{
-            requestClient:requestClient
+            requestDialogOpen:false
         },
     };
-    console.log(dispatchObj);
     return dispatch(dispatchObj);
 };
 
-export const connectReplyClient = (replyClient) => (dispatch) => {
-    console.log("connectReplyClient");
-    replyClient = Stomp.over(new SockJS('http://127.0.0.1:8090/reply'));
-    replyClient.connect({}, function (frame) {
-        replyClient.subscribe("/api/client/sellReply/id=3", function (request) {
-            console.log(request.body);
-            let dispatchObj = {
+export const connectRequestClient = (requestClient) => (dispatch) => {
+    console.log("connectRequestClient");
+
+    requestClient = Stomp.over(new SockJS('http://127.0.0.1:8090/request'));
+    let dispatchObj;
+    requestClient.connect({}, function (frame) {
+        requestClient.subscribe("/api/client/property/sell/reply/id=3", function (reply) {
+            dispatchObj = {
                 type:types.CONNECT_CLIENT,
                 payload:{
-                    replyClient:replyClient,
-                    replyDialogOpen:true,
+                    requestClient:requestClient,
+                    requestDialogOpen:true,
+                    reply:JSON.parse(reply.body),
                 },
             };
-            console.log("监听到");
-            console.log(dispatchObj);
             return dispatch(dispatchObj);
+
+            }
+        );
+    });
+    dispatchObj = {
+        type:types.CONNECT_CLIENT,
+        payload:{
+            requestClient:requestClient,
+            requestDialogOpen:false,
+        },
+    };
+    return dispatch(dispatchObj);
+};
+
+export const connectReplyClient = () => (dispatch) => {
+    console.log("connectReplyClient");
+    var replyClient = Stomp.over(new SockJS('http://127.0.0.1:8090/reply'));
+    let dispatchObj ;
+
+    replyClient.connect({}, function (frame) {
+        replyClient.subscribe("/api/client/sellReply/id=3", function (request) {
+            if(request !== null){
+                console.log(JSON.parse(request.body));
+                dispatchObj = {
+                    type:types.CONNECT_CLIENT,
+                    payload:{
+                        replyClient:replyClient,
+                        replyDialogOpen:true,
+                        request:JSON.parse(request.body),
+                    },
+                };
+                console.log("监听到");
+                return dispatch(dispatchObj);
+            }
         });
     });
-    let dispatchObj = {
+    dispatchObj = {
         type:types.CONNECT_CLIENT,
         payload:{
             replyClient:replyClient,
@@ -68,9 +75,22 @@ export const connectReplyClient = (replyClient) => (dispatch) => {
         },
     };
     console.log("没监听到");
-    console.log(dispatchObj);
     return dispatch(dispatchObj);
 };
+
+export const isAcceptSell = (isAccept,replyClient) => (dispatch) => {
+    let message = (isAccept ? "yes" : "no");
+    replyClient.send("/api/client/readyToReceive/id=3", {}, message);
+    let dispatchObj = {
+        type:types.IS_ACCEPT_SELL,
+        payload:{
+            replyDialogOpen:false,
+        },
+    };
+    return dispatch(dispatchObj);
+};
+
+
 
 export const changeAvatar = (id,newAvatar) => (dispatch) =>{
     let dispatchObj = {
@@ -89,7 +109,7 @@ export const changeAvatar = (id,newAvatar) => (dispatch) =>{
 };
 
 
-export const getHistoryList = (id) =>(dispatch)=> { //测试
+export const getHistoryList = (id) =>(dispatch)=> { //通过
     // console.log("调用 getHistory id = "+ id);
     let dispatchObj = {
         type:types.GET_HISTORY_LIST,

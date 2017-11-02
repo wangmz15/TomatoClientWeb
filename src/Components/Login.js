@@ -72,20 +72,28 @@ class Login extends React.Component{
 
     handleLogin = () => {
         if (!this.state.username) {
-            this.setState({ error: { username: '请输入用户名' } })
+            this.setState({ error: { username: '请输入用户名' } });
             return
             }
             // error: empty password
         if (!this.state.password) {
-            this.setState({ error: { password: '请输入密码' } })
+            this.setState({ error: { password: '请输入密码' } });
             return
         }
 
         this.props.loginCustomer(this.state.username, this.state.password).then(
             response => {
+
                 setJwtToken(response.value.token);
-                this.props.connectReplyClient(this.props.replyClient);
                 this.props.connectRequestClient(this.props.requestClient);
+
+
+                this.props.connectReplyClient(this.props.replyClient);
+                // console.log("!!!!!!!!!!!");
+                // language=JavaScript
+                // setTimeout("this.props.replyClient.send('/api/client/readyToReceive/id=3', {}, 'startListen')",3000);
+                // this.props.replyClient.send('/api/client/readyToReceive/id=3', {}, 'startListen in login');
+                console.log("????????? ddddd");
             }).catch ((err) => {
             this.setState({
                 username: '',
@@ -93,7 +101,7 @@ class Login extends React.Component{
                 error: { username: '不存在该用户或用户名与账号不匹配', password: '' }
             });
         });
-    }
+    };
 
     render()
     {

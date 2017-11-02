@@ -12,3 +12,5 @@ export const SELL_MACHINE = 'SELL_MACHINE';
 export const PRODUCE = 'PRODUCE';
 export const CHANGE_AVATAR = "CHANGE_AVATAR";
 export const CONNECT_CLIENT = 'CONNECT_CLIENT';
+export const IS_ACCEPT_SELL = 'IS_ACCEPT_SELL';
+export const RECEIVE_REPLY ='RECEIVE_REPLY';

@@ -1,58 +1,51 @@
 import {
-    GET_PROPERTY, SELL_MACHINE, SELL_MATERIAL, UPDATE_PROPERTY,
+    CONNECT_CLIENT, IS_ACCEPT_SELL, RECEIVE_REPLY,
 } from '../Constants/ActionTypes'
 
 const initialState = {
-    machine:{
-        id:-1,
-        type:"type ?",
-        left:-1,
-    },
-    material:{
-        type:"none",
-        price:-11,
-        number:-111,
-    }
+    replyClient:{},
+    requestClient:{},
+    request:{buyer:-1,seller:-1,price:-1,typeOrMachineID:'',number:-1},
+    reply:{buyer:-1, price:-1,typeOrMachineID:'',number:-1,isAgree:false},
+
+    replyDialogOpen:false,
+    requestDialogOpen:false,
 };
-const property = (state = initialState, action) => {
+
+const propertyy = (state = initialState, action) => {
     switch (action.type) {
-        case `${SELL_MACHINE}_ACK`: {
+        case `${RECEIVE_REPLY}`: {
             return {
                 ...state,
                 ...action.payload,
             };
         }
-        // case `${SELL_MACHINE}_ERR`: {
-        //     return {
-        //         state
-        //     };
-        // }
-        case `${SELL_MATERIAL}_ACK`: {
+        case `${IS_ACCEPT_SELL}`: {
             return {
                 ...state,
                 ...action.payload,
             };
         }
-        // case `${SELL_MATERIAL}_ERR`: {
-        //     return {
-        //         state,
-        //     };
-        // }
-        case `${GET_PROPERTY}_ACK`: {
-            return {
+        case `${CONNECT_CLIENT}`: {
+            let curState =  {
                 ...state,
                 ...action.payload,
+                // request:action.payload.request,
+                // reply
+                // replyDialogOpen:action.payload.replyDialogOpen,
+                // replyClient:action.payload.replyClient,
             };
+            if (curState.request === undefined || curState.request === null||
+                curState.reply === undefined || curState.reply === null) {
+                curState.request = initialState.request;
+                curState.reply = initialState.reply;
+            }
+            return curState;
         }
-        // case `${UPDATE_PROPERTY}_ERR`: {
-        //     return {
-        //         state,
-        //     };
-        // }
         default:
             return state;
     }
 }
 
 
-export default property;
+export default propertyy;

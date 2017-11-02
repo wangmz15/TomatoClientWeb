@@ -6,12 +6,17 @@ import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import Divider from 'material-ui/Divider';
-import {Avatar, Dialog, FlatButton, makeSelectable, Paper, Subheader, Table, TableBody, TableRow} from "material-ui";
+import {
+    Avatar, Dialog, FlatButton, makeSelectable, Paper, Subheader, Table, TableBody, TableRow,
+    Toggle
+} from "material-ui";
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
 import LogoutButton from "./LogoutButton";
 import img1 from "../Resources/1.jpg";
 import img2 from "../Resources/2.jpg";
 import img3 from "../Resources/3.jpg";
+import ReplyDialog from "./ReplyDialog";
+import RequestDialog from "./RequestDialog";
 
 // import SelectAvatar from "./SelectAvatar";
 
@@ -54,6 +59,8 @@ export default class TeamMessage extends React.Component{
     componentWillMount() {
         this.props.getInformation(this.props.id).then(() => {
         });
+        // this.props.connectReplyClient(this.props.replyClient);
+        // this.props.connectRequestClient(this.props.requestClient);
     }
 
 
@@ -101,47 +108,23 @@ export default class TeamMessage extends React.Component{
             />,
         ];
 
-
-        // let SelectableList = makeSelectable(List);
-        //
-        // function wrapState(ComposedComponent) {
-        //     return class SelectableList extends React.Component {
-        //         constructor(props){
-        //             super(props);
-        //         }
-        //         componentWillMount() {this.setState({selectedIndex: this.props.defaultValue,});}
-        //         handleRequestChange = (event, index) => {
-        //             this.setState({
-        //                 selectedIndex: index,
-        //             });
-        //             let ans = "/Resources/" + this.state.selectedIndex + ".jpg";
-        //             console.log("??" + this.props.gameStatus);
-        //             // this.props.updateInformation(this.props.username,this.props.id,ans,this.props.rank,this.props.gameStatus);
-        //
-        //         };
-        //         render() {
-        //             return (
-        //                 <ComposedComponent
-        //                     value={this.state.selectedIndex}
-        //                     onChange={this.handleRequestChange}
-        //                 >
-        //                     {this.props.children}
-        //                 </ComposedComponent>
-        //             );
-        //         }
-        //     };
-        // }
-        // SelectableList = wrapState(SelectableList);
-
         return(
             <div>
+
+
                 <MyAppBarAndDrawer text = {'队伍信息'}/>
+
+
 
                 <IconButton
                     iconStyle={styles.largeAvatarIcon}
                     style={styles.largeDIV}>
                     <AccountCircle onClick = {this.changeAvatar}/>
                 </IconButton>
+
+                <RequestDialog/>
+                <ReplyDialog/>
+
 
                 <Dialog title="更改头像"
                         actions={ChangeAvatarActions}
@@ -190,7 +173,6 @@ export default class TeamMessage extends React.Component{
 
                 <br/><br/>
                 <LogoutButton />
-                {/*<LogoutButton onClick={this.handleLogout}/>*/}
             </div>
         )
     }

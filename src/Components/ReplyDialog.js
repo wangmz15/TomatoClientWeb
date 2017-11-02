@@ -1,7 +1,8 @@
 import React from 'react';
-import {Dialog, FlatButton, RaisedButton,TextField} from "material-ui";
-import SelectField from 'material-ui/SelectField';
+import {Dialog, FlatButton, Toggle} from "material-ui";
 import MenuItem from 'material-ui/MenuItem';
+import {connectReplyClient,isAcceptSell} from "../Actions/index";
+import connect from "react-redux/es/connect/connect";
 
 /**
  * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
@@ -44,53 +45,110 @@ const styles = {
 };
 
 
-export default class ReplyDialog extends React.Component {
+class ReplyDialog extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             replyDialogOpen:this.props.replyDialogOpen,
             isInPropertyPage:this.props.isInPropertyPage,
+
+            toggled:true,
         }
     }
-    handleClose = () => {
-        this.props.isAcceptSell(false);
-        this.setState({
-            sellRequestDialogOpen:false,
-        });
+
+    handleReject = () => {
+        this.props.isAcceptSell(false,this.props.replyClient);
     };
 
     handleSubmit =()=>{
-        this.props.isAcceptSell(true);
-        if(this.state.isInPropertyPage){
-            this.props.getPropertyList();
-        }
-        else {
-
-        }
-        this.handleClose();
+        this.props.isAcceptSell(true,this.props.replyClient);
     };
+
+    componentWillMount() {
+        this.props.connectReplyClient(this.props.replyClient);
+    }
 
     render() {
         const sellActions = [
             <FlatButton
-                label="确认"
+                label="拒绝"
+                primary={true}
+                onClick={this.handleReject}
+            />,
+            <FlatButton
+                label="接受"
                 primary={true}
                 keyboardFocused={true}
                 onClick={this.handleSubmit}
             />,
         ];
-        console.log(this.state.replyDialogOpen);
+        // let re = this.props.request;
+        // console.log("buggggggg");
+        // console.log(this.props.request);
+
+
+        console.log(this.props.request);
         return (
-            <div>
+            <div >
+                <Toggle
+                    label="接受出售请求"
+                    style={styles.toggle}
+                    onToggle={this.test}
+                />
                 <Dialog style={styles.dialog}
-                        title="出售成功"
+                        title="收到出售请求"
                         actions={sellActions}
-                        open={this.state.replyDialogOpen}
-                        onRequestClose={this.handleClose}
+                        open={this.props.replyDialogOpen}
+                        // onRequestClose={this.handleClose}
                 >
-                    **队伍已接受您以**元出售**台的请求
+                    {this.props.request.buyer}队将以{this.props.request.price}元／个的价格向您出售
+                    {this.getType()}，
+                    共{this.props.request.number}个，是否接受？
                 </Dialog>
             </div>
         );
     }
+
+    getType(){
+        switch (this.props.request.typeOrMachineID){
+            case 'wood':
+                return '木材';
+            case 'cement':
+                return '水泥';
+            case 'brick':
+                return '砖块';
+            default:
+                return '机器'+this.props.request.typeOrMachineID;
+        }
+    }
+
+    test = () =>{
+        this.setState({
+            toggled:!this.state.toggled,
+        });
+        if(this.state.toggled){
+            this.props.replyClient.send("/api/client/readyToReceive/id=3", {}, "startListen")
+        }
+        else {
+            this.props.replyClient.unsubscribe();
+        }
+        console.log(this.props.replyClient);
+
+        // this.props.replyClient.send("/api/client/property/sellMachine/id=3", {}, JSON.stringify({'name': 'name'}))
+
+
+    }
 }
+
+const mapStateToProps = (state) => ({//定义怎么绑定
+    replyDialogOpen:state.propertyy.replyDialogOpen,
+    replyClient:state.propertyy.replyClient,
+
+    request:state.propertyy.request,
+});
+
+
+export default connect(// 把需要绑定的东西放进去
+    mapStateToProps,
+    { connectReplyClient,isAcceptSell }
+)(ReplyDialog)
