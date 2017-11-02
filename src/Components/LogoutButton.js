@@ -28,14 +28,10 @@ class LogoutButton extends React.Component{
             navigate:'false'
         }
     }
-    // handleNavigation = () => {
-    //     this.setState({navigate:!this.state.navigate})
-    //     console.log("navigate = "+this.state.username)
-    // }
 
     handleLogout = () => {
         removeJwtToken();
-        this.props.replyClient.disconnect();
+        this.props.buyerClient.disconnect();
         window.location.href = '/';
     };
     render(){
@@ -59,7 +55,7 @@ class LogoutButton extends React.Component{
 
 
 const mapStateToProps = (state) => ({
-    replyClient:state.propertyy.replyClient,
+    buyerClient:state.propertyy.buyerClient,
 });
 
 export default connect(// 把需要绑定的东西放进去

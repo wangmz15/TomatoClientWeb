@@ -5,7 +5,6 @@ import {
 const initialState = {
     sellerClient:{},
     buyerClient:{},
-    competitionStatusClient:{},
 
     request:{buyer:-1,seller:-1,price:-1,typeOrMachineID:'',number:-1},
     reply:{buyer:-1, price:-1,typeOrMachineID:'',number:-1,isAgree:false},

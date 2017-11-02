@@ -13,10 +13,19 @@ const initialState = {
     isAuthenticated: false,
     rank: -1,
     gameStatus:'-1',
+
+    competitionStatusClient:{},
 };
 
 const customer = (state = initialState, action) => {
     switch (action.type) {
+        case `${CONNECT_CLIENT}`: {
+            let curState =  {
+                ...state,
+                ...action.payload,
+            };
+            return curState;
+        }
         case `${LOGIN_CUSTOMER}_ACK`: {
             return {
                 ...state,

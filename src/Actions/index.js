@@ -8,19 +8,19 @@ const API = 'http://localhost:8080/api/client';
 
 export const connectCompetitionStatusClient = () => (dispatch) => {
     console.log("connectCompetitionStatusClient");
-
     var competitionStatusClient = Stomp.over(new SockJS('http://127.0.0.1:8090/competitionStatus'));
     let dispatchObj;
     competitionStatusClient.connect({}, function (frame) {
         competitionStatusClient.subscribe("/api/client/CompetitionStatus", function (status) {
+            console.log("status Changed!");
                 dispatchObj = {
                     type:types.CONNECT_CLIENT,
                     payload:{
                         competitionStatusClient:competitionStatusClient,
+                        gameStatus:JSON.parse(status.body),
                     },
                 };
                 return dispatch(dispatchObj);
-
             }
         );
     });

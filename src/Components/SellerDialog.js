@@ -54,7 +54,7 @@ class SellerDialog extends React.Component {
     }
 
     componentWillMount() {
-        this.props.connectSellerClient(this.props.buyerClient);
+        this.props.connectSellerClient();
     }
 
     handleSubmit =()=>{

@@ -1,11 +1,13 @@
 import React, { Component} from 'react'
 import { connect } from 'react-redux'
-import {loginCustomer, connectBuyerClient,connectSellerClient} from '../Actions'
+import {loginCustomer, connectBuyerClient,connectSellerClient,connectCompetitionStatusClient} from '../Actions'
 import {Redirect} from 'react-router-dom'
 import Login from '../Components/Login'
 class LoginContainer extends Component {
     render() {
-        const { loginCustomer,isAuthenticated, username, replyClient,buyerClient, connectBuyerClient,connectSellerClient } = this.props;
+        const { loginCustomer,isAuthenticated, username,
+            replyClient,buyerClient, competitionStatusClient,
+            connectBuyerClient,connectSellerClient,connectCompetitionStatusClient } = this.props;
 
         if (isAuthenticated) {
             return (
@@ -18,10 +20,14 @@ class LoginContainer extends Component {
                         loginCustomer = {loginCustomer}
                          username = {username}
                          isAuthenticated = {isAuthenticated}
+
                         buyerClient = {buyerClient}
                         replyClient = {replyClient}
+                        competitionStatusClient={competitionStatusClient}
+
                         connectBuyerClient = {connectBuyerClient}
                         connectSellerClient = {connectSellerClient}
+                        connectCompetitionStatusClient={connectCompetitionStatusClient}
                 />
             );
         }
@@ -33,9 +39,10 @@ const mapStateToProps = (state) => ({//定义怎么绑定
   username:state.customer.username,
     replyClient:state.propertyy.replyClient,
     buyerClient:state.propertyy.buyerClient,
+    competitionStatusClient:state.customer.competitionStatusClient,
 });
 
 export default connect(// 把需要绑定的东西放进去
   mapStateToProps,
-  { loginCustomer,connectBuyerClient,connectSellerClient }
+  { loginCustomer,connectBuyerClient,connectSellerClient,connectCompetitionStatusClient }
 )(LoginContainer)

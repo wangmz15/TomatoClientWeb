@@ -1,7 +1,7 @@
 import React from 'react';
 import {Dialog, FlatButton, Toggle} from "material-ui";
 import MenuItem from 'material-ui/MenuItem';
-import {connectBuyerClient,isAcceptSell} from "../Actions/index";
+import {connectBuyerClient, connectCompetitionStatusClient, isAcceptSell} from "../Actions/index";
 import connect from "react-redux/es/connect/connect";
 
 /**
@@ -66,7 +66,7 @@ class BuyerDialog extends React.Component {
 
     componentWillMount() {
         this.props.connectBuyerClient();
-        // this.props.buyerClient.send("/api/client/readyToReceive/id=3", {}, JSON.stringify({'message': false}));
+        this.props.connectCompetitionStatusClient();
     }
 
     render() {
@@ -121,6 +121,7 @@ class BuyerDialog extends React.Component {
         });
         if(this.state.toggled){
             this.props.buyerClient.send("/api/client/readyToReceive/id=3", {}, JSON.stringify({'isAccept': true}))
+            this.props.competitionStatusClient.send("/test",{},"ddasdfasdfw")
         }
         else {
         }
@@ -133,10 +134,12 @@ const mapStateToProps = (state) => ({//定义怎么绑定
     buyerClient:state.propertyy.buyerClient,
 
     request:state.propertyy.request,
+
+    competitionStatusClient:state.customer.competitionStatusClient,
 });
 
 
 export default connect(// 把需要绑定的东西放进去
     mapStateToProps,
-    { connectBuyerClient,isAcceptSell }
+    { connectBuyerClient,isAcceptSell,connectCompetitionStatusClient }
 )(BuyerDialog)
