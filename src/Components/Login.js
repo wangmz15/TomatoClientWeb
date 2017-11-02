@@ -85,10 +85,10 @@ class Login extends React.Component{
             response => {
 
                 setJwtToken(response.value.token);
-                this.props.connectRequestClient(this.props.requestClient);
+                this.props.connectSellerClient(this.props.buyerClient);
 
 
-                this.props.connectReplyClient(this.props.replyClient);
+                this.props.connectBuyerClient(this.props.replyClient);
                 // console.log("!!!!!!!!!!!");
                 // language=JavaScript
                 // setTimeout("this.props.replyClient.send('/api/client/readyToReceive/id=3', {}, 'startListen')",3000);

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Dialog, FlatButton, Toggle} from "material-ui";
 import MenuItem from 'material-ui/MenuItem';
-import {connectReplyClient,isAcceptSell} from "../Actions/index";
+import {connectBuyerClient,isAcceptSell} from "../Actions/index";
 import connect from "react-redux/es/connect/connect";
 
 /**
@@ -45,11 +45,11 @@ const styles = {
 };
 
 
-class ReplyDialog extends React.Component {
+class BuyerDialog extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            replyDialogOpen:this.props.replyDialogOpen,
+            buyerDialogOpen:this.props.buyerDialogOpen,
             isInPropertyPage:this.props.isInPropertyPage,
 
             toggled:true,
@@ -57,15 +57,16 @@ class ReplyDialog extends React.Component {
     }
 
     handleReject = () => {
-        this.props.isAcceptSell(false,this.props.replyClient);
+        this.props.isAcceptSell(false,this.props.buyerClient);
     };
 
     handleSubmit =()=>{
-        this.props.isAcceptSell(true,this.props.replyClient);
+        this.props.isAcceptSell(true,this.props.buyerClient);
     };
 
     componentWillMount() {
-        this.props.connectReplyClient(this.props.replyClient);
+        this.props.connectBuyerClient();
+        // this.props.buyerClient.send("/api/client/readyToReceive/id=3", {}, JSON.stringify({'message': false}));
     }
 
     render() {
@@ -82,12 +83,6 @@ class ReplyDialog extends React.Component {
                 onClick={this.handleSubmit}
             />,
         ];
-        // let re = this.props.request;
-        // console.log("buggggggg");
-        // console.log(this.props.request);
-
-
-        console.log(this.props.request);
         return (
             <div >
                 <Toggle
@@ -98,11 +93,9 @@ class ReplyDialog extends React.Component {
                 <Dialog style={styles.dialog}
                         title="收到出售请求"
                         actions={sellActions}
-                        open={this.props.replyDialogOpen}
-                        // onRequestClose={this.handleClose}
+                        open={this.props.buyerDialogOpen}
                 >
-                    {this.props.request.buyer}队将以{this.props.request.price}元／个的价格向您出售
-                    {this.getType()}，
+                    {this.props.request.buyer}队将以{this.props.request.price}元/个的价格向您出售{this.getType()}，
                     共{this.props.request.number}个，是否接受？
                 </Dialog>
             </div>
@@ -127,22 +120,17 @@ class ReplyDialog extends React.Component {
             toggled:!this.state.toggled,
         });
         if(this.state.toggled){
-            this.props.replyClient.send("/api/client/readyToReceive/id=3", {}, "startListen")
+            this.props.buyerClient.send("/api/client/readyToReceive/id=3", {}, JSON.stringify({'isAccept': true}))
         }
         else {
-            this.props.replyClient.unsubscribe();
         }
-        console.log(this.props.replyClient);
-
-        // this.props.replyClient.send("/api/client/property/sellMachine/id=3", {}, JSON.stringify({'name': 'name'}))
-
 
     }
 }
 
 const mapStateToProps = (state) => ({//定义怎么绑定
-    replyDialogOpen:state.propertyy.replyDialogOpen,
-    replyClient:state.propertyy.replyClient,
+    buyerDialogOpen:state.propertyy.buyerDialogOpen,
+    buyerClient:state.propertyy.buyerClient,
 
     request:state.propertyy.request,
 });
@@ -150,5 +138,5 @@ const mapStateToProps = (state) => ({//定义怎么绑定
 
 export default connect(// 把需要绑定的东西放进去
     mapStateToProps,
-    { connectReplyClient,isAcceptSell }
-)(ReplyDialog)
+    { connectBuyerClient,isAcceptSell }
+)(BuyerDialog)

@@ -9,10 +9,7 @@ import MachineDialog from "./MachineDialog";
 import MaterialDialog from "./MaterialDialog";
 import wood from "material-ui/svg-icons/image/nature";
 import brick from "material-ui/svg-icons/image/view-compact";
-import RequestDialog from "./RequestDialog";
-import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
-import ReplyDialog from "./ReplyDialog";
+import RequestDialog from "./SellerDialog";
 
 
 
@@ -93,9 +90,11 @@ export default class PropertyForm extends React.Component{
         this.props.getInformation(this.props.id).then(()=>{});
         this.props.getPropertyList(this.props.id).then(() => {
         });
+        this.props.getAllUser(this.props.id).then(() => {
+        });
 
-        // this.props.connectReplyClient(this.props.replyClient);
-        this.props.connectRequestClient(this.props.requestClient);
+        // this.props.connectBuyerClient(this.props.replyClient);
+        this.props.connectSellerClient(this.props.buyerClient);
     }
     renderAvatar(type){
         switch(type){
@@ -127,12 +126,12 @@ export default class PropertyForm extends React.Component{
                     </table>
 
                     <MaterialDialog
-                        sellMaterial = {this.props.sellMaterial}
 
                         material = {item}
                         id = {this.props.id}
+                        allUserList={this.props.allUserList}
 
-                        requestClient={this.props.requestClient}
+                        sellerClient={this.props.sellerClient}
 
                     />
                 </Paper>
@@ -141,10 +140,11 @@ export default class PropertyForm extends React.Component{
     }
 
     renderMachineList (){
+        // console.log("int PropertyForm");
+        // console.log(this.props.allUserList);
         return(this.props.machineList.map(item => {
             return(
                 <Paper style={styles.ContainerPaper}>
-                    {/*<ListItem>*/}
                     <Paper style={styles.CirclePaper} circle={true} zDepth={2}>
                         <Avatar
                             //src="material-ui/svg-icons/action/store"
@@ -159,17 +159,15 @@ export default class PropertyForm extends React.Component{
                     <br/>
                     <div>
                         <MachineDialog
-                            sellMachine = {this.props.sellMachine}
                             produce = {this.props.produce}
 
                             machine = {item}
                             id = {this.props.id}
+                            allUserList={this.props.allUserList}
 
-                            requestClient={this.props.requestClient}
-
+                            sellerClient={this.props.sellerClient}
                         />
                     </div>
-                    {/*</ListItem>*/}
                 </Paper>
             );
         }));

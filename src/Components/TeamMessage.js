@@ -15,8 +15,8 @@ import LogoutButton from "./LogoutButton";
 import img1 from "../Resources/1.jpg";
 import img2 from "../Resources/2.jpg";
 import img3 from "../Resources/3.jpg";
-import ReplyDialog from "./ReplyDialog";
-import RequestDialog from "./RequestDialog";
+import BuyerDialog from "./BuyerDialog";
+import SellerDialog from "./SellerDialog";
 
 // import SelectAvatar from "./SelectAvatar";
 
@@ -59,8 +59,6 @@ export default class TeamMessage extends React.Component{
     componentWillMount() {
         this.props.getInformation(this.props.id).then(() => {
         });
-        // this.props.connectReplyClient(this.props.replyClient);
-        // this.props.connectRequestClient(this.props.requestClient);
     }
 
 
@@ -122,8 +120,8 @@ export default class TeamMessage extends React.Component{
                     <AccountCircle onClick = {this.changeAvatar}/>
                 </IconButton>
 
-                <RequestDialog/>
-                <ReplyDialog/>
+                <SellerDialog/>
+                <BuyerDialog/>
 
 
                 <Dialog title="更改头像"

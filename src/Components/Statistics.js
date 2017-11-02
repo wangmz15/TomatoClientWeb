@@ -11,8 +11,8 @@ import {
     TableRow,
     TableRowColumn
 } from "material-ui";
-import RequestDialog from "./RequestDialog";
-import ReplyDialog from "./ReplyDialog";
+import RequestDialog from "./SellerDialog";
+import ReplyDialog from "./BuyerDialog";
 
 var socket = new SockJS('http://127.0.0.1:8090/hhh');
 let replyClient = Stomp.over(socket);

@@ -1,13 +1,5 @@
 import React from 'react';
 import {Dialog, FlatButton, RaisedButton, TextField, SelectField, MenuItem} from "material-ui";
-
-const items = [];
-for (let i = 1; i < 101; i++ ) {
-    items.push(<MenuItem value={i} key={i} primaryText={`${i}`} />);
-}
-/**
- * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
- */
 const styles = {
     input:{
         width:60,
@@ -65,7 +57,7 @@ export default class MaterialDialog extends React.Component {
         // ).catch((err)=>{
         //
         // });
-        this.props.requestClient.send('/api/client/property/sell/id=3',{},
+        this.props.sellerClient.send('/api/client/property/sell/id=3',{},
             JSON.stringify({'buyer':this.state.sellUserID,'typeOrMachineID': this.props.material.type,
                 'price':this.state.sellPrice,'number':this.state.sellNum,'seller':this.props.id}));
 
@@ -81,6 +73,16 @@ export default class MaterialDialog extends React.Component {
     sellMachine = ()=>{this.setState({sellDialogOpen:true});};
 
     sellMaterial = ()=>{this.setState({sellDialogOpen:true});};
+
+    renderItems = () =>{
+        const items = [];
+        for (let i = 0; i < this.props.allUserList.length; i++ ) {
+            items.push(<MenuItem value={this.props.allUserList[i].username} key={i}
+                                 primaryText={`${this.props.allUserList[i].username}`}
+            />);
+        }
+        return items;
+    };
 
     render() {
         const actions = [
@@ -114,7 +116,7 @@ export default class MaterialDialog extends React.Component {
                                 value={this.state.sellUserID}
                                 onChange={this.handleChange}
                                 maxHeight={200}>
-                                {items}
+                                {this.renderItems()}
                             </SelectField></td></tr>
                         <tr><td>出售数量：</td><td>
                             <TextField hintText={"1"}

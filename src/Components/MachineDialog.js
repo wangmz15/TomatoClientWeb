@@ -6,10 +6,6 @@ import MenuItem from 'material-ui/MenuItem';
 /**
  * Dialogs can be nested. This example opens a Date Picker from within a Dialog.
  */
-const items = [];
-for (let i = 1; i < 101; i++ ) {
-    items.push(<MenuItem value={i} key={i} primaryText={`${i}`} />);
-}
 const styles = {
     input:{
         width:60,
@@ -52,7 +48,7 @@ export default class MachineDialog extends React.Component {
             produceDialogOpen:false,
 
             sellPrice:null,
-            sellUserID:null,
+            sellUserName:null,
 
             produceTime:null,
         }
@@ -63,20 +59,21 @@ export default class MachineDialog extends React.Component {
             produceDialogOpen:false,
 
             sellPrice:null,
-            sellUserID:null,
+            sellUserName:null,
 
             produceTime:null,
         });
     };
 
+
     handleSubmitSell =()=>{
-        // this.props.sellMachine(this.props.id, this.props.machine.id,this.state.sellPrice, this.state.sellUserID).then(
+        // this.props.sellMachine(this.props.id, this.props.machine.id,this.state.sellPrice, this.state.sellUserName).then(
         //
         // ).catch((err)=>{
         //
         // });
-        this.props.requestClient.send('/api/client/property/sell/id=3',{},
-            JSON.stringify({'buyer':this.state.sellUserID,'typeOrMachineID': this.props.machine.id,
+        this.props.sellerClient.send('/api/client/property/sell/id=3',{},
+            JSON.stringify({'buyer':this.state.sellUserName,'typeOrMachineID': this.props.machine.id,
                 'price':this.state.sellPrice,'number':1,'seller':this.props.ID}));
         this.handleClose();
     };
@@ -88,14 +85,25 @@ export default class MachineDialog extends React.Component {
         });
         this.handleClose();
     };
-    handleChange = (event, index, value) => {this.setState({sellUserID:value});};
+    handleChange = (event, index, value) => {this.setState({sellUserName:value});};
 
     handleSellPrice = (event) =>{this.setState({ sellPrice: event.target.value })};
 
     handleProduceTime = (event) =>{this.setState({ produceTime: event.target.value });};
     
-    sellMachine = ()=>{this.setState({sellDialogOpen:true});};
+    sellMachine = ()=> {this.setState({sellDialogOpen:true});};
     produce = ()=>{this.setState({produceDialogOpen:true});};
+
+    renderItems = () =>{
+        const items = [];
+        for (let i = 0; i < this.props.allUserList.length; i++ ) {
+            items.push(<MenuItem value={this.props.allUserList[i].username} key={i}
+                                 primaryText={`${this.props.allUserList[i].username}`} 
+            />);
+        }
+        return items;
+    };
+
     render() {
         const sellActions = [
             <FlatButton
@@ -107,7 +115,7 @@ export default class MachineDialog extends React.Component {
                 label="确认"
                 primary={true}
                 keyboardFocused={true}
-                disabled={!((this.state.sellUserID) && (this.state.sellPrice))}
+                disabled={!((this.state.sellUserName) && (this.state.sellPrice))}
                 onClick={this.handleSubmitSell}
             />,
         ];
@@ -144,10 +152,10 @@ export default class MachineDialog extends React.Component {
                         <tr><td>出售队伍ID：</td><td>
                             <SelectField
                             style={styles.selectTeam}
-                            value={this.state.sellUserID}
+                            value={this.state.sellUserName}
                             onChange={this.handleChange}
                             maxHeight={200}>
-                                {items}
+                                {this.renderItems()}
                             </SelectField></td></tr>
                         <tr><td>出售价格：</td><td>
                             <TextField hintText={"100"}

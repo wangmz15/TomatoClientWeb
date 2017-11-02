@@ -1,7 +1,7 @@
 import React from 'react';
 import {Dialog, FlatButton} from "material-ui";
 import MenuItem from 'material-ui/MenuItem';
-import {connectRequestClient, receiveReply} from "../Actions/index";
+import {connectSellerClient, receiveReply} from "../Actions/index";
 import connect from "react-redux/es/connect/connect";
 
 /**
@@ -45,7 +45,7 @@ const styles = {
 };
 
 
-class RequestDialog extends React.Component {
+class SellerDialog extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -54,7 +54,7 @@ class RequestDialog extends React.Component {
     }
 
     componentWillMount() {
-        this.props.connectRequestClient(this.props.requestClient);
+        this.props.connectSellerClient(this.props.buyerClient);
     }
 
     handleSubmit =()=>{
@@ -87,8 +87,7 @@ class RequestDialog extends React.Component {
                 <Dialog style={styles.dialog}
                         title={this.props.reply.isAgree?'出售成功':'出售失败'}
                         actions={sellActions}
-                        open={this.props.requestDialogOpen}
-                        // onRequestClose={this.handleClose}
+                        open={this.props.sellerDialogOpen}
                 >
                     {this.props.reply.buyer}队{this.props.reply.isAgree?'确认':'拒绝'}接受您以{this.getDetail()}的请求
                 </Dialog>
@@ -98,8 +97,8 @@ class RequestDialog extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    requestDialogOpen:state.propertyy.requestDialogOpen,
-    requestClient:state.propertyy.requestClient,
+    sellerDialogOpen:state.propertyy.sellerDialogOpen,
+    buyerClient:state.propertyy.buyerClient,
 
     reply:state.propertyy.reply,
 
@@ -108,5 +107,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    { connectRequestClient,receiveReply}
-)(RequestDialog)
+    { connectSellerClient,receiveReply}
+)(SellerDialog)
