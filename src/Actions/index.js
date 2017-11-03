@@ -2,6 +2,7 @@ import * as types from '../Constants/ActionTypes'
 import request from "superagent";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import * as $ from "jquery";
 const API = 'http://localhost:8080/api/client';
 
 
@@ -204,30 +205,53 @@ export const getPropertyList = (id) =>(dispatch)=> { //通过测试
 
     return dispatch(dispatchObj);
 };
-
-export const updateInformation = (username,id,avatar,rank,gameStatus) => (dispatch) => {
-    // console.log("avatar"+avatar);
-    let dispatchObj = {
-        type: types.UPDATE_INFORMATION,
-        payload: {
-            promise:
-                request
-                    .put(`${API}/info/id=${id}`)
-                    .set('Content-Type', 'application/json')
-                    .accept('application/json')
-                    .send({
-                        "username": username,
-                        "id": id,
-                        "avatar": avatar,
-                        "rank": 1,
-                        "gameStatus":gameStatus,
-                    })
-                    .then(response => response.body)
-        },
-    };
-    // console.log(dispatchObj)
-    return dispatch(dispatchObj);
+export const updateInformation = (id,newAvatar) => (dispatch) => {
+    console.log(" updateInformation");
+    $.ajax({
+        url: 'http://localhost:8080/api/client/echofile',
+        type: "POST",
+        data: newAvatar,
+        enctype: 'multipart/form-data',
+        processData: false,
+        contentType: false
+    }).done(function(data) {
+        console.log("uploaded !");
+        let dispatchObj = {
+            type: types.UPDATE_INFORMATION,
+            payload: {
+                "avatar":`<div style="width: 125px; height: 125px; border-radius: 50%; border: 3px solid #eee; overflow: hidden;"><img src="data:${data.contenttype};base64,${data.base64}" width="155px" height="155px"/></div>`
+            },
+        };
+        // console.log(dispatchObj)
+        return dispatch(dispatchObj);
+    }).fail(function(jqXHR, textStatus) {
+        //alert(jqXHR.responseText);
+        alert('File upload failed ...');
+    });
 };
+// export const updateInformation = (username,id,avatar,rank,gameStatus) => (dispatch) => {
+//     // console.log("avatar"+avatar);
+//     let dispatchObj = {
+//         type: types.UPDATE_INFORMATION,
+//         payload: {
+//             promise:
+//                 request
+//                     .put(`${API}/info/id=${id}`)
+//                     .set('Content-Type', 'application/json')
+//                     .accept('application/json')
+//                     .send({
+//                         "username": username,
+//                         "id": id,
+//                         "avatar": avatar,
+//                         "rank": 1,
+//                         "gameStatus":gameStatus,
+//                     })
+//                     .then(response => response.body)
+//         },
+//     };
+//     // console.log(dispatchObj)
+//     return dispatch(dispatchObj);
+// };
 
 
 export const getInformation = (id) =>(dispatch)=> {//测试通过

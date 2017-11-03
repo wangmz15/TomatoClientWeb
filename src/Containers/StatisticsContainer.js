@@ -3,14 +3,6 @@ import { connect } from 'react-redux'
 import Statistics from "../Components/Statistics";
 import { getHistoryList} from "../Actions/index";
 
-import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
-
-var socket = new SockJS('http://127.0.0.1:8090/hhh');
-let replyClient = Stomp.over(socket);
-
-
-
 class StatisticsContainer extends Component {
     componentWillMount() {
     };

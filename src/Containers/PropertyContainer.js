@@ -2,7 +2,7 @@ import React, { Component} from 'react'
 import { connect } from 'react-redux'
 import PropertyForm from "../Components/PropertyForm";
 import {
-    getInformation, getPropertyList, produce, sellMachine, sellMaterial, connectBuyerClient, connectSellerClient,
+    getInformation, getPropertyList, produce, connectBuyerClient, connectSellerClient,
     getAllUser
 } from "../Actions/index";
 

@@ -4,11 +4,11 @@ import LogoutButton from "./LogoutButton";
 import Extension from 'material-ui/svg-icons/action/extension';
 import Store from 'material-ui/svg-icons/action/store';
 import SwipeableViews from 'react-swipeable-views';
-import {Avatar, BottomNavigation, BottomNavigationItem, FlatButton, Paper} from "material-ui";
+import {Avatar, BottomNavigation, BottomNavigationItem,  Paper} from "material-ui";
 import MachineDialog from "./MachineDialog";
 import MaterialDialog from "./MaterialDialog";
-import wood from "material-ui/svg-icons/image/nature";
-import brick from "material-ui/svg-icons/image/view-compact";
+import Wood from "material-ui/svg-icons/image/nature";
+import Brick from "material-ui/svg-icons/image/view-compact";
 import RequestDialog from "./SellerDialog";
 
 
@@ -99,30 +99,32 @@ export default class PropertyForm extends React.Component{
     renderAvatar(type){
         switch(type){
             case 'wood':
-                return (<wood/>);
+                return (<Wood/>);
             case 'brick':
-                return (<brick/>);
+                return (<Brick/>);
             case 'cement':
-                return (<wood/>);
+                return (<Wood/>);
             default:
-                return (<wood/>);
+                return (<Wood/>);
         }
     }
 
     renderMaterialList (){
         return(this.props.materialList.map(item => {
             return(
-                <Paper style={styles.ContainerPaper}>
+                <Paper style={styles.ContainerPaper} key={item.type}>
                     <Paper style={styles.CirclePaper} circle={true} zDepth={2}>
                         <Avatar
-                            icon={<wood />}
+                            icon={<Wood />}
                             style={styles.avatar}
                         />
                     </Paper><br/>
                     <table style={styles.table}>
-                        <tr><td>种类：</td> <td>{item.type}</td></tr>
-                        <tr><td>生产价格：</td> <td>{item.price}</td></tr>
-                        <tr><td>数量：</td> <td>{item.number}</td></tr>
+                        <tbody>
+                        <tr><td>种类：</td><td>{item.type}</td></tr>
+                        <tr><td>生产价格：</td><td>{item.price}</td></tr>
+                        <tr><td>数量：</td><td>{item.number}</td></tr>
+                        </tbody>
                     </table>
 
                     <MaterialDialog
@@ -144,7 +146,7 @@ export default class PropertyForm extends React.Component{
         // console.log(this.props.allUserList);
         return(this.props.machineList.map(item => {
             return(
-                <Paper style={styles.ContainerPaper}>
+                <Paper style={styles.ContainerPaper} key = {item.id}>
                     <Paper style={styles.CirclePaper} circle={true} zDepth={2}>
                         <Avatar
                             //src="material-ui/svg-icons/action/store"
@@ -152,9 +154,11 @@ export default class PropertyForm extends React.Component{
                         />
                     </Paper><br/>
                     <table style={styles.table}>
-                        <tr><td>机器ID:</td> <td>{item.id}</td></tr>
-                        <tr><td>生产种类: </td> <td>{item.type}</td></tr>
-                        <tr><td>剩余次数: </td> <td>{item.left}</td></tr>
+                        <tbody>
+                        <tr><td>机器ID:</td><td>{item.id}</td></tr>
+                        <tr><td>生产种类:</td><td>{item.type}</td></tr>
+                        <tr><td>剩余次数:</td><td>{item.left}</td></tr>
+                        </tbody>
                     </table>
                     <br/>
                     <div>
@@ -181,10 +185,12 @@ export default class PropertyForm extends React.Component{
         return (
             <Paper style={styles.statusContainerPaper}>
                 <table style={styles.statusTable}>
+                    <tbody>
                     <tr>
                         <td>比赛状态：{this.props.gameStatus}</td>
                         <td>剩余财产：{this.props.wealth}</td>
                     </tr>
+                    </tbody>
                 </table>
             </Paper>
 

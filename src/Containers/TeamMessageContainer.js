@@ -1,7 +1,7 @@
 import React, { Component} from 'react'
 import { connect } from 'react-redux'
 import TeamMessage from '../Components/TeamMessage'
-import {changeAvatar, connectBuyerClient, getInformation, isAcceptSell, updateInformation} from "../Actions/index";
+import {changeAvatar,  getInformation, updateInformation} from "../Actions/index";
 
 class TeamMessageContainer extends Component {
     render() {

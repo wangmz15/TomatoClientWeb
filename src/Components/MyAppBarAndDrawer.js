@@ -13,7 +13,7 @@ export default class MyAppBarAndDrawer extends React.Component{
         super(props);
         this.state = {
             text:props.text,
-            navigate:'false'
+            navigate:false
         }
     }
     handleNavigation = () => this.setState({navigate:!this.state.navigate})

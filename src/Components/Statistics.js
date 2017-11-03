@@ -3,19 +3,13 @@ import History from 'material-ui/svg-icons/action/history';
 import Favorite from 'material-ui/svg-icons/action/favorite-border';
 import MyAppBarAndDrawer from "./MyAppBarAndDrawer";
 import LogoutButton from "./LogoutButton";
-import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
 import SwipeableViews from 'react-swipeable-views';
 import {
-    BottomNavigation, BottomNavigationItem, Paper, Subheader, Table, TableBody, TableHeader, TableHeaderColumn,
+    BottomNavigation, BottomNavigationItem, Paper, Table, TableBody, TableHeader, TableHeaderColumn,
     TableRow,
     TableRowColumn
 } from "material-ui";
-import RequestDialog from "./SellerDialog";
-import ReplyDialog from "./BuyerDialog";
-
-var socket = new SockJS('http://127.0.0.1:8090/hhh');
-let replyClient = Stomp.over(socket);
+import SellerDialog from "./SellerDialog";
 
 const styles = {
     headline: {
@@ -89,7 +83,7 @@ export default class Statistics extends React.Component{
     renderHistoryList = () =>{
         return(this.props.historyList.map(item => {
         return(
-            <TableRow>
+            <TableRow key={item.time}>
                 <TableRowColumn style={styles.tableCell}>{item.time}</TableRowColumn>
                 <TableRowColumn style={styles.tableCell}>{item.target}</TableRowColumn>
                 <TableRowColumn style={styles.tableCell}>{this.renderDetails(item)}</TableRowColumn>
@@ -128,7 +122,7 @@ export default class Statistics extends React.Component{
             <div>
                 <MyAppBarAndDrawer text = {'统计'}/>
 
-                <RequestDialog/>
+                <SellerDialog/>
 
                 <Paper zDepth={2}>
                     <BottomNavigation selectedIndex={this.state.selectedIndex}>

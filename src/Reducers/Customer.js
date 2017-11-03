@@ -1,10 +1,8 @@
 import {
     LOGIN_CUSTOMER,
-    GET_INFORMATION, UPDATE_INFORMATION, CHANGE_AVATAR, CONNECT_CLIENT, IS_ACCEPT_SELL
+    GET_INFORMATION, UPDATE_INFORMATION, CHANGE_AVATAR, CONNECT_CLIENT,
 } from '../Constants/ActionTypes'
 
-import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
 
 const initialState = {
     username: '',
@@ -51,10 +49,10 @@ const customer = (state = initialState, action) => {
                 ...action.payload,
             };
         }
-        case `${UPDATE_INFORMATION}_ACK`: {
+        case `${UPDATE_INFORMATION}`: {
             console.log({
                 ...state,
-                // ...action.payload,
+                ...action.payload,
                 // action.payload,
             });
             return {
