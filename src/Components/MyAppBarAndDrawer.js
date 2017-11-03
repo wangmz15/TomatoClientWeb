@@ -4,7 +4,7 @@ import {Drawer, MenuItem} from "material-ui";
 import { Link } from 'react-router-dom'
 const styles = {
     title:{
-        'text-align': 'center',
+        'textAlign': 'center',
     }
 }
 
